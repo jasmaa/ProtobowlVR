@@ -5,6 +5,7 @@ using UnityEngine;
 using SimpleJSON;
 
 public static class Utils {
+	// Utils for processing data
 
 	public static List<int> convertJSONToList(JSONArray arr){
 		// converts json array to int list

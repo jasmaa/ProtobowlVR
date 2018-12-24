@@ -6,12 +6,19 @@ using UnityEngine;
 using SimpleJSON;
 
 public class QuestionDisplay : MonoBehaviour {
+	// Handles question display and game state
 
 	public Protobowl pb;
-
 	private float localTime = 0;
 	private int localIndex = 0;
-	public string disp = "";
+
+	private string disp = "";
+	public string Disp
+	{
+		get {
+			return disp;
+		}
+	}
 
 	void Start(){
 		Invoke ("PlayQuestion", 0.5f);
