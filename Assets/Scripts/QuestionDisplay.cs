@@ -14,7 +14,18 @@ public class QuestionDisplay : MonoBehaviour {
 	public string disp = "";
 
 	void Start(){
+		Invoke ("PlayQuestion", 2);
+	}
+
+	void PlayQuestion(){
 		StartCoroutine (UpdateDisp());
+	}
+
+	IEnumerator Test(){
+		while (true) {
+			print ("hi");
+			yield return new WaitForSeconds (1);
+		}
 	}
 
 	void InitDisp(){
@@ -30,7 +41,7 @@ public class QuestionDisplay : MonoBehaviour {
 
 		var accum = 0;
 		var qList = pb.data ["question"].ToString ().Split (' ');
-		List<int> timing = convertJSONToList (pb.data ["timing"].AsArray);
+		List<int> timing = Utils.convertJSONToList (pb.data ["timing"].AsArray);
 		for (int i = 0; i < timing.Count; i++) {
 			localIndex = i;
 			disp += qList + " ";
@@ -47,46 +58,39 @@ public class QuestionDisplay : MonoBehaviour {
 
 	IEnumerator UpdateDisp(){
 		// update display
-
-		print (pb.state);
-
-		// detect new question
-		if (pb.state == Protobowl.GameState.NEW_Q) {
-			pb.state = Protobowl.GameState.RUNNING;
-			InitDisp ();
-		}
-
-		// run client-side display
-		if (pb.state == Protobowl.GameState.RUNNING) {
-
-			List<int> timing = convertJSONToList (pb.data ["timing"].AsArray);
-
-			if (localIndex < timing.Count) {
-				var qList = pb.data ["question"].ToString ().Split (' ');
-				disp = string.Join (" ", qList.Take (localIndex + 1).ToArray ());
-
-				var currentInterval = Mathf.Round (timing [localIndex] * pb.data ["rate"]);
-				yield return new WaitForSeconds (currentInterval / 1000);
-				localTime += currentInterval;
-				localIndex++;
+		while (true) {
+			// detect new question
+			if (pb.state == Protobowl.GameState.NEW_Q) {
+				pb.state = Protobowl.GameState.RUNNING;
+				InitDisp ();
 			}
-		} else {
-			pb.state = Protobowl.GameState.IDLE;
-		}
 
-		// auto-fill when question ends
-		if (pb.state == Protobowl.GameState.IDLE) {
-			disp = pb.data ["question"];
-		}
-	}
+			// run client-side display
+			if (pb.state == Protobowl.GameState.RUNNING) {
 
-	private List<int> convertJSONToList(JSONArray arr){
-		// converts json array to int list
+				List<int> timing = Utils.convertJSONToList (pb.data ["timing"].AsArray);
 
-		List<int> retList = new List<int> ();
-		foreach (JSONNode element in arr) {
-			retList.Add (element.AsInt);
+				if (localIndex < timing.Count) {
+					var qList = pb.data ["question"].ToString ().Split (' ');
+					disp = string.Join (" ", qList.Take (localIndex + 1).ToArray ());
+
+					var currentInterval = Mathf.Round (timing [localIndex] * pb.data ["rate"]);
+					print (currentInterval);
+					yield return new WaitForSeconds (currentInterval / 1000);
+					localTime += currentInterval;
+					localIndex++;
+				}
+			} else {
+				pb.state = Protobowl.GameState.IDLE;
+				yield return new WaitForSeconds (0.1f);
+			}
+
+			// auto-fill when question ends
+			if (pb.state == Protobowl.GameState.IDLE) {
+				disp = pb.data ["question"];
+			}
+
+			print (pb.state);
 		}
-		return retList;
 	}
 }

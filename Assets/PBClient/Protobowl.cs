@@ -21,7 +21,7 @@ public class Protobowl {
 	}
 	public GameState state = GameState.NEW_Q;
 
-	public JSONNode data;
+	public JSONNode data = JSON.Parse("{}");
 	private JSONNode oldData;
 
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
@@ -71,8 +71,10 @@ public class Protobowl {
 
 		if ("sync".Equals(parsedData ["name"])) {
 			JSONNode args = parsedData ["args"][0];
-			data = args;
+			//data = args;
 			oldData = data;
+			data = Utils.MergeDict (data, args);
+
 			Debug.Log ("UPDATE");
 		}
 	}
@@ -88,22 +90,11 @@ public class Protobowl {
 		if (data ["time_freeze"] != 0) {
 			state = Protobowl.GameState.BUZZED;
 		}
-		else if (containsKey("question", oldData) &&
-			containsKey("question", data)&&
+		else if (Utils.containsKey("question", oldData) &&
+			Utils.containsKey("question", data)&&
 			oldData ["question"] != data ["question"]) {
 			state = Protobowl.GameState.NEW_Q;
 		}
-	}
-
-	private bool containsKey(string target, JSONNode dict){
-		// Checks if JSON node contains key
-
-		foreach (var key in dict.Keys) {
-			if(target.Equals(key)){
-				return true;
-			}
-		}
-		return false;
 	}
 
 
