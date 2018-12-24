@@ -28,9 +28,13 @@ public static class Utils {
 	}
 
 	public static JSONNode MergeDict(JSONNode src, JSONNode addition){
-		foreach (var key in addition.Keys) {
-			src.Add (key, addition[key]);
+		JSONNode ret = JSON.Parse ("{}");
+		foreach (var key in src.Keys) {
+			ret.Add (key, src[key]);
 		}
-		return src;
+		foreach (var key in addition.Keys) {
+			ret.Add (key, addition[key]);
+		}
+		return ret;
 	}
 }

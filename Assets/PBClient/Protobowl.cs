@@ -22,6 +22,7 @@ public class Protobowl {
 	public GameState state = GameState.NEW_Q;
 
 	public JSONNode data = JSON.Parse("{}");
+	private JSONNode args;
 	private JSONNode oldData;
 
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
@@ -46,11 +47,8 @@ public class Protobowl {
 				socketString = www.downloadHandler.text.Split (':')[0];
 				ws = new WebSocket ("ws://" + server + socketString);
 
-				//Debug.Log ("ws://" + server + socketString);
-
 				ws.OnMessage += (sender, e) => {
 					// Update data on websocket sync
-					//Debug.Log(e.Data);
 					UpdateData(e.Data);
 					UpdateState();
 					Ping();
@@ -70,12 +68,9 @@ public class Protobowl {
 		JSONNode parsedData = JSON.Parse (rawData.Substring(4));
 
 		if ("sync".Equals(parsedData ["name"])) {
-			JSONNode args = parsedData ["args"][0];
-			//data = args;
+			args = parsedData ["args"][0];
 			oldData = data;
 			data = Utils.MergeDict (data, args);
-
-			Debug.Log ("UPDATE");
 		}
 	}
 
@@ -91,9 +86,10 @@ public class Protobowl {
 			state = Protobowl.GameState.BUZZED;
 		}
 		else if (Utils.containsKey("question", oldData) &&
-			Utils.containsKey("question", data)&&
-			oldData ["question"] != data ["question"]) {
+			Utils.containsKey("question", args) &&
+			!oldData ["question"].Equals(args ["question"])) {
 			state = Protobowl.GameState.NEW_Q;
+			Debug.Log ("new question");
 		}
 	}
 

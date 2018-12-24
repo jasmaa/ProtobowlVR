@@ -14,10 +14,11 @@ public class QuestionDisplay : MonoBehaviour {
 	public string disp = "";
 
 	void Start(){
-		Invoke ("PlayQuestion", 2);
+		Invoke ("PlayQuestion", 0.1f);
 	}
 
 	void PlayQuestion(){
+		InitDisp ();
 		StartCoroutine (UpdateDisp());
 	}
 
@@ -33,6 +34,7 @@ public class QuestionDisplay : MonoBehaviour {
 		print ("init display");
 
 		// init display
+
 		var timePassed = pb.data ["real_time"] - pb.data ["time_offset"] - pb.data ["begin_time"];
 
 		if (pb.state == Protobowl.GameState.BUZZED) {
@@ -53,7 +55,6 @@ public class QuestionDisplay : MonoBehaviour {
 		}
 
 		localTime = pb.data ["real_time"];
-
 	}
 
 	IEnumerator UpdateDisp(){
@@ -75,13 +76,13 @@ public class QuestionDisplay : MonoBehaviour {
 					disp = string.Join (" ", qList.Take (localIndex + 1).ToArray ());
 
 					var currentInterval = Mathf.Round (timing [localIndex] * pb.data ["rate"]);
-					print (currentInterval);
 					yield return new WaitForSeconds (currentInterval / 1000);
 					localTime += currentInterval;
 					localIndex++;
+				} else {
+					pb.state = Protobowl.GameState.IDLE;
 				}
 			} else {
-				pb.state = Protobowl.GameState.IDLE;
 				yield return new WaitForSeconds (0.1f);
 			}
 
