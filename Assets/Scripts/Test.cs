@@ -1,23 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Test : MonoBehaviour {
 
-	Protobowl p;
+	public QuestionDisplay qDisp;
+	public Text question;
+	Protobowl pb;
 
 	// Use this for initialization
 	void Start () {
 
-		p = new Protobowl ();
-		StartCoroutine(p.Init ());
+		pb = new Protobowl ();
+		StartCoroutine(pb.Init ());
+
+		qDisp.pb = pb;
+
+	}
+
+	void Update(){
+		question.text = qDisp.disp;
 	}
 
 	public void Buzz(){
-		p.Buzz ();
+		pb.Buzz ();
 	}
 
 	public void Guess(){
-		p.Guess ("bananas", false);
+		pb.Guess ("bananas", true);
 	}
 }

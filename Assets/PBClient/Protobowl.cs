@@ -11,12 +11,24 @@ using SimpleJSON;
 public class Protobowl {
 	// Bare bones PB API
 
+	public enum GameState {
+		RUNNING,
+		PAUSED,
+		BUZZED,
+		PROMPTED,
+		IDLE,
+		NEW_Q
+	}
+	public GameState state = GameState.NEW_Q;
+
+	public JSONNode data;
+	private JSONNode oldData;
+
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
 
 	private string socketString;
 	private string cookie = "derp";
 	private WebSocket ws;
-	private JSONNode data;
 	
 	public IEnumerator Init(){
 		// Initialize socket
@@ -34,12 +46,14 @@ public class Protobowl {
 				socketString = www.downloadHandler.text.Split (':')[0];
 				ws = new WebSocket ("ws://" + server + socketString);
 
-				Debug.Log ("ws://" + server + socketString);
+				//Debug.Log ("ws://" + server + socketString);
 
 				ws.OnMessage += (sender, e) => {
 					// Update data on websocket sync
-					Debug.Log(e.Data);
+					//Debug.Log(e.Data);
 					UpdateData(e.Data);
+					UpdateState();
+					Ping();
 				};
 
 				ws.Connect ();
@@ -58,8 +72,40 @@ public class Protobowl {
 		if ("sync".Equals(parsedData ["name"])) {
 			JSONNode args = parsedData ["args"][0];
 			data = args;
+			oldData = data;
+			Debug.Log ("UPDATE");
 		}
 	}
+
+	private void UpdateState(){
+		if (data ["real_time"] - data ["time_offset"] - data ["end_time"] < 0) {
+			state = Protobowl.GameState.RUNNING;
+		} else {
+			state = Protobowl.GameState.IDLE;
+		}
+
+		// time freeze check
+		if (data ["time_freeze"] != 0) {
+			state = Protobowl.GameState.BUZZED;
+		}
+		else if (containsKey("question", oldData) &&
+			containsKey("question", data)&&
+			oldData ["question"] != data ["question"]) {
+			state = Protobowl.GameState.NEW_Q;
+		}
+	}
+
+	private bool containsKey(string target, JSONNode dict){
+		// Checks if JSON node contains key
+
+		foreach (var key in dict.Keys) {
+			if(target.Equals(key)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	public void JoinRoom(string roomName){
 		// joins room
