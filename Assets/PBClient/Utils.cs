@@ -28,6 +28,8 @@ public static class Utils {
 	}
 
 	public static JSONNode MergeDict(JSONNode src, JSONNode addition){
+		// Merge two JSONNodes precedenting addition
+
 		JSONNode ret = JSON.Parse ("{}");
 		foreach (var key in src.Keys) {
 			ret.Add (key, src[key]);

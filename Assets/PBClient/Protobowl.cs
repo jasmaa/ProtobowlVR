@@ -22,7 +22,7 @@ public class Protobowl {
 	public GameState state = GameState.NEW_Q;
 
 	public JSONNode data = JSON.Parse("{}");
-	private JSONNode args;
+	public JSONNode args;
 	private JSONNode oldData;
 
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
@@ -75,7 +75,7 @@ public class Protobowl {
 	}
 
 	private void UpdateState(){
-		if (data ["real_time"] - data ["time_offset"] - data ["end_time"] < 0) {
+		if (data ["real_time"].AsLong - data ["time_offset"].AsLong - data ["end_time"].AsLong < 0) {
 			state = Protobowl.GameState.RUNNING;
 		} else {
 			state = Protobowl.GameState.IDLE;
@@ -88,8 +88,9 @@ public class Protobowl {
 		else if (Utils.containsKey("question", oldData) &&
 			Utils.containsKey("question", args) &&
 			!oldData ["question"].Equals(args ["question"])) {
+
 			state = Protobowl.GameState.NEW_Q;
-			Debug.Log ("new question");
+			oldData = args;
 		}
 	}
 

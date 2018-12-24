@@ -14,7 +14,7 @@ public class QuestionDisplay : MonoBehaviour {
 	public string disp = "";
 
 	void Start(){
-		Invoke ("PlayQuestion", 0.1f);
+		Invoke ("PlayQuestion", 0.5f);
 	}
 
 	void PlayQuestion(){
@@ -22,23 +22,13 @@ public class QuestionDisplay : MonoBehaviour {
 		StartCoroutine (UpdateDisp());
 	}
 
-	IEnumerator Test(){
-		while (true) {
-			print ("hi");
-			yield return new WaitForSeconds (1);
-		}
-	}
-
 	void InitDisp(){
-
-		print ("init display");
-
 		// init display
 
-		var timePassed = pb.data ["real_time"] - pb.data ["time_offset"] - pb.data ["begin_time"];
+		var timePassed = pb.data ["real_time"].AsLong - pb.data ["time_offset"].AsLong - pb.data ["begin_time"].AsLong;
 
 		if (pb.state == Protobowl.GameState.BUZZED) {
-			timePassed = pb.data ["time_freeze"] - pb.data ["begin_time"];
+			timePassed = pb.data ["time_freeze"].AsLong - pb.data ["begin_time"].AsLong;
 		}
 
 		var accum = 0;
@@ -46,15 +36,15 @@ public class QuestionDisplay : MonoBehaviour {
 		List<int> timing = Utils.convertJSONToList (pb.data ["timing"].AsArray);
 		for (int i = 0; i < timing.Count; i++) {
 			localIndex = i;
-			disp += qList + " ";
 			accum += (int)Mathf.Round (timing [i] * pb.data ["rate"]);
 
-			if (accum >= timePassed) {
+			if (accum - timePassed >= 0) {
 				break;
 			}
 		}
 
-		localTime = pb.data ["real_time"];
+		disp = string.Join (" ", qList.Take (localIndex + 1).ToArray ());
+		localTime = pb.data ["real_time"].AsLong;
 	}
 
 	IEnumerator UpdateDisp(){
@@ -91,7 +81,7 @@ public class QuestionDisplay : MonoBehaviour {
 				disp = pb.data ["question"];
 			}
 
-			print (pb.state);
+			//print (pb.state);
 		}
 	}
 }
