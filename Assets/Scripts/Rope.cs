@@ -8,6 +8,9 @@ public class Rope : MonoBehaviour {
 
 	public int numJoints = 10;
 	public GameObject jointObj;
+	public GameObject endJoint;
+
+
 	public GameObject src;
 	public GameObject target;
 
@@ -22,15 +25,15 @@ public class Rope : MonoBehaviour {
 			joints [i].GetComponent<CharacterJoint> ().connectedBody = joints [i + 1].GetComponent<Rigidbody>();
 		}
 
-		src.GetComponent<CharacterJoint> ().connectedBody = joints [0].GetComponent<Rigidbody>();
+		endJoint.GetComponent<CharacterJoint> ().connectedBody = joints [0].GetComponent<Rigidbody>();
 
 		// init line renderer
 		lineRenderer.positionCount = numJoints;
 	}
 
 	void Update(){
-		lineRenderer.SetPosition (0, src.transform.GetChild(0).transform.position);
-		for(int i = 0; i < numJoints; i++){
+		lineRenderer.SetPosition (0, src.transform.position);
+		for(int i = 0; i < numJoints - 1; i++){
 			lineRenderer.SetPosition (i + 1, joints [i].transform.position);
 		}
 	}
