@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		print (client.pb.state);
+		//print (client.pb.state);
 
 		// oculus input detection
 		if(buzzer.GetComponent<OVRGrabbable>().isGrabbed && OVRInput.Get(OVRInput.Button.One)){

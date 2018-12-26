@@ -26,5 +26,14 @@ public class UIManager : MonoBehaviour {
 		personalQuestionText.text = client.questionDisplay.Disp;
 		bulletinQuestionText.text = client.questionDisplay.Disp;
 		topicText.text = client.pb.GetCategory();
+
+		DebugUsers ();
+	}
+
+	void DebugUsers(){
+		foreach (User user in client.pb.users.Values) {
+			print (user.name + " " + user.score);
+		}
+		print ("===");
 	}
 }

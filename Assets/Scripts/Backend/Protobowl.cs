@@ -20,6 +20,7 @@ public class Protobowl {
 		NEW_Q
 	}
 	public GameState state = GameState.NEW_Q;
+	public IDictionary<string, User> users = new Dictionary<string, User> ();
 
 	public JSONNode data = JSON.Parse("{}");
 	public JSONNode args;
@@ -48,9 +49,11 @@ public class Protobowl {
 				ws = new WebSocket ("ws://" + server + socketString);
 
 				ws.OnMessage += (sender, e) => {
+
 					// Update data on websocket sync
 					UpdateData(e.Data);
 					UpdateState();
+					UpdateUsers();
 					Ping();
 				};
 
@@ -94,9 +97,48 @@ public class Protobowl {
 		}
 	}
 
+	public void UpdateUsers(){
+		// Updates user names and scores
+
+		foreach (JSONNode userData in args["users"]){
+
+			User user;
+			if (!users.ContainsKey (userData ["id"])) {
+				user = new User (userData ["id"], userData ["name"], 0);
+				users.Add (userData ["id"], user);
+			} else {
+				user = users [userData ["id"]];
+			}
+
+			// update name
+			user.name = userData["name"];
+
+			// update score
+			int score = 0;
+
+			score += data ["scoring"] ["normal"] [0] * userData ["corrects"] ["normal"];
+			score += data ["scoring"] ["early"] [0] * userData ["corrects"] ["early"];
+			score += data ["scoring"] ["interrupt"] [0] * userData ["corrects"] ["interrupt"];
+			score += data ["scoring"] ["normal"] [1] * userData ["wrongs"] ["normal"];
+			score += data ["scoring"] ["early"] [1] * userData ["wrongs"] ["early"];
+			score += data ["scoring"] ["interrupt"] [1] * userData ["wrongs"] ["interrupt"];
+
+			user.score = score;
+
+		}
+	}
+
+	// === Receive ===
+
 	public string GetCategory(){
 		return data ["info"] ["category"];
 	}
+
+	public string GetAnswer(){
+		return data ["answer"];
+	}
+
+	// === Send ===
 
 	public void JoinRoom(string roomName){
 		// joins room
