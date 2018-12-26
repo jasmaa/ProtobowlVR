@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Rope : MonoBehaviour {
+	// Rope physics
+
 	public LineRenderer lineRenderer;
 	private List<GameObject> joints;
 

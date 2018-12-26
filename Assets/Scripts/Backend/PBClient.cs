@@ -6,7 +6,7 @@ public class PBClient : MonoBehaviour {
 	// Interfaces game and Protobowl
 
 	public QuestionDisplay questionDisplay;
-	Protobowl pb;
+	public Protobowl pb;
 
 	void Start () {
 

@@ -94,6 +94,9 @@ public class Protobowl {
 		}
 	}
 
+	public string GetCategory(){
+		return data ["info"] ["category"];
+	}
 
 	public void JoinRoom(string roomName){
 		// joins room
@@ -126,17 +129,17 @@ public class Protobowl {
 	
 	public void Skip(){
 		// skip question
-		ws.Send ("5:::{\"skip\":\"next\",\"args\":[null,null]}");
+		ws.Send ("5:::{\"name\":\"skip\",\"args\":[null,null]}");
 	}
 	
 	public void Pause(){
 		// pause question
-		ws.Send ("5:::{\"pause\":\"next\",\"args\":[null,null]}");
+		ws.Send ("5:::{\"name\":\"pause\",\"args\":[null,null]}");
 	}
 	
 	public void Unpause(){
 		// unpause question
-		ws.Send ("5:::{\"unpause\":\"next\",\"args\":[null,null]}");
+		ws.Send ("5:::{\"name\":\"unpause\",\"args\":[null,null]}");
 	}
 	
 	public void Ping(){
