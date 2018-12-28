@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OptionMenu : MonoBehaviour {
+	// Controls opening/closing menu
 
 	public bool isMenuOpen = false;
 

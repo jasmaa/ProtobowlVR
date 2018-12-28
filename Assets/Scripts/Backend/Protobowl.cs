@@ -130,8 +130,16 @@ public class Protobowl {
 
 	// === Receive ===
 
-	public string GetCategory(){
+	public string GetQuestionCategory(){
 		return data ["info"] ["category"];
+	}
+
+	public string GetRoomCategory(){
+		return data ["category"];
+	}
+
+	public string GetDifficulty(){
+		return data ["difficulty"];
 	}
 
 	public string GetAnswer(){
@@ -202,5 +210,6 @@ public class Protobowl {
 	public void SetCategory(string category){
 		// set category
 		ws.Send ("5:::{\"name\":\"set_category\",\"args\":[\""+ category +"\",null]}");
+		Debug.Log ("5:::{\"name\":\"set_category\",\"args\":[\""+ category +"\",null]}");
 	}
 }

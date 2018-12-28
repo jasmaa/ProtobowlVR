@@ -15,6 +15,6 @@ public class TopicText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		topicText.text = GameManager.instance.client.pb.GetCategory();
+		topicText.text = GameManager.instance.client.pb.GetQuestionCategory();
 	}
 }
