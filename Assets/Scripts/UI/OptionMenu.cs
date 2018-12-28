@@ -7,6 +7,10 @@ public class OptionMenu : MonoBehaviour {
 
 	public bool isMenuOpen = false;
 
+	public GameObject categoryWheel;
+	public GameObject difficultyWheel;
+	public GameObject optionList;
+
 	private GameObject player;
 	private Animator ani;
 
@@ -39,6 +43,9 @@ public class OptionMenu : MonoBehaviour {
 	public void Close(){
 		if(isMenuOpen && Vector3.Dot(-transform.forward, player.transform.forward) > 0.9) {
 			isMenuOpen = false;
+			optionList.GetComponent<OptionList> ().ResetState ();
+			categoryWheel.SetActive(false);
+			difficultyWheel.SetActive(false);
 			ani.Play ("OptionMenuClose");
 		}
 	}

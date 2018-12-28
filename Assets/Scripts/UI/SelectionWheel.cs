@@ -11,17 +11,15 @@ public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 	private List<GameObject> selectionTexts;
 
 	public List<string> options;
-	private string selected;
+	private string selected = "";
 
 	public int separationFactor = 50;
 
-	private GameObject selectionArea;
+	public GameObject selectionArea;
 	private Vector2 oldPos = Vector2.zero;
 
 	// Use this for initialization
 	void Start () {
-
-		selectionArea = transform.Find ("SelectionArea").gameObject;
 
 		selectionTexts = new List<GameObject> ();
 		int counter = 0;
@@ -55,6 +53,7 @@ public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 			}
 		}
 		if (index != -1) {
+			print (index);
 			selectionArea.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (0, index * separationFactor);
 			selected = query;
 		}
