@@ -27,7 +27,10 @@ public class OptionList : MonoBehaviour {
 			selectedState = SelectedState.CATEGORY;
 		}
 		else if (selectedState == SelectedState.CATEGORY) {
-			GameManager.instance.client.pb.SetCategory (categoryWheel.GetComponent<SelectionWheel>().GetSelected());
+			if (!categoryWheel.GetComponent<SelectionWheel> ().GetSelected ().Equals (GameManager.instance.client.pb.GetRoomCategory())) {
+				GameManager.instance.client.pb.SetCategory (categoryWheel.GetComponent<SelectionWheel>().GetSelected());
+			}
+				
 			categoryWheel.SetActive (false);
 			selectedState = SelectedState.NONE;
 		}
@@ -40,7 +43,10 @@ public class OptionList : MonoBehaviour {
 			selectedState = SelectedState.DIFFICULTY;
 		}
 		else if (selectedState == SelectedState.DIFFICULTY) {
-			GameManager.instance.client.pb.SetDifficulty (difficultyWheel.GetComponent<SelectionWheel>().GetSelected());
+			if (!difficultyWheel.GetComponent<SelectionWheel> ().GetSelected ().Equals (GameManager.instance.client.pb.GetDifficulty())) {
+				GameManager.instance.client.pb.SetDifficulty (difficultyWheel.GetComponent<SelectionWheel>().GetSelected());
+			}
+				
 			difficultyWheel.SetActive (false);
 			selectedState = SelectedState.NONE;
 		}

@@ -89,7 +89,7 @@ public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 	}
 
 	private string ParseQuery(string s){
-		if (!options.Contains(s)) {
+		if ("Everything".Equals(s) || "Any".Equals(s)) {
 			return "";
 		}
 		return s;
