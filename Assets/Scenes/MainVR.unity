@@ -1556,7 +1556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   client: {fileID: 734783229}
   buzzer: {fileID: 2016596965}
-  optionMenu: {fileID: 1412125389036944, guid: cfe41c4525137594aae8e08aa1e9438d, type: 2}
+  optionMenu: {fileID: 1925462184}
   countdownBar: {fileID: 880440511}
   inputManager: {fileID: 1876571576}
   rHand: {fileID: 437445361}
@@ -1595,7 +1595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb2bd73c693819b438933135f1c188f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionDisplay: {fileID: 734783228}
+  tracker: {fileID: 734783228}
 --- !u!114 &734783230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3327,8 +3327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0590458ee391ef04091fb8f02d6ad1d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
-  keyboardVR: {fileID: 107983803}
+  mode: 1
+  keyboardVR: {fileID: 1837311628}
   voiceInput: {fileID: 1256167541}
 --- !u!1 &1890644710
 GameObject:

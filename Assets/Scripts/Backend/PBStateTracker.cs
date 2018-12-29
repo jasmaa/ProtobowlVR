@@ -5,7 +5,7 @@ using UnityEngine;
 
 using SimpleJSON;
 
-public class QuestionDisplay : MonoBehaviour {
+public class PBStateTracker : MonoBehaviour {
 	// Handles question display and game state
 
 	public Protobowl pb;
@@ -78,7 +78,9 @@ public class QuestionDisplay : MonoBehaviour {
 					yield return new WaitForSeconds (currentInterval / 1000);
 					localTime += currentInterval;
 					localIndex++;
-				} else {
+				}
+				else {
+					yield return new WaitForSeconds (pb.data["answer_duration"] / 1000);
 					pb.state = Protobowl.GameState.IDLE;
 				}
 			} else {

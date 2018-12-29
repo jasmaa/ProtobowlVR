@@ -15,6 +15,6 @@ public class QuestionText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		questionText.text = GameManager.instance.client.questionDisplay.Disp;
+		questionText.text = GameManager.instance.client.tracker.Disp;
 	}
 }

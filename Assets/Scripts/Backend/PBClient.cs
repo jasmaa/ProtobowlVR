@@ -5,7 +5,7 @@ using UnityEngine;
 public class PBClient : MonoBehaviour {
 	// Interfaces game and Protobowl
 
-	public QuestionDisplay questionDisplay;
+	public PBStateTracker tracker;
 	public Protobowl pb;
 
 	void Start () {
@@ -13,7 +13,7 @@ public class PBClient : MonoBehaviour {
 		pb = new Protobowl ();
 		StartCoroutine(pb.Init ());
 
-		questionDisplay.pb = pb;
+		tracker.pb = pb;
 
 	}
 
