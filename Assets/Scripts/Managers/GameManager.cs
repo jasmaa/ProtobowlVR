@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour {
 
 	// COOLDOWNS and LOCKOUTS
 	private float optionMenuCooldown = 0;
-	private float buzzCooldown = 0;
+	private float stateUpdateCooldown = 0;
+	private bool buzzLockout = false;
 
 	void Start () {
 		if (instance == null) {
@@ -38,10 +39,12 @@ public class GameManager : MonoBehaviour {
 		//print (client.pb.state);
 
 		// === Update based on state ===
-		if (client.pb.state == Protobowl.GameState.RUNNING) {
+		if (stateUpdateCooldown == 0 && client.pb.state == Protobowl.GameState.RUNNING) {
 			buzzer.GetComponent<Buzzer>().SetLight (false);
 			inputManager.TurnOff ();
-			buzzCooldown = 0;
+			buzzLockout = false;
+
+			stateUpdateCooldown = 1;
 		}
 
 		// === Input Detection ===
@@ -79,20 +82,22 @@ public class GameManager : MonoBehaviour {
 
 		// Update cooldowns
 		optionMenuCooldown = Mathf.Clamp(optionMenuCooldown - Time.deltaTime, 0, 9999);
-		buzzCooldown = Mathf.Clamp(buzzCooldown - Time.deltaTime, 0, 9999);
+		stateUpdateCooldown = Mathf.Clamp(stateUpdateCooldown - Time.deltaTime, 0, 9999);
 	}
 
 	void PlayerBuzz(){
 		// Handles player buzz
-		//if (buzzCooldown != 0) {
-		//	return;
-		//}
+		if (buzzLockout) {
+			return;
+		}
 
 		client.pb.Buzz ();
-		buzzCooldown = 2;
+		buzzLockout = true;
 
-		if (client.pb.uid.Equals (client.pb.args ["attempt"] ["user"])) {
-
+		Invoke ("DetectBuzz", 0.1f);
+	}
+	void DetectBuzz(){
+		if (client.pb.hasBuzz) {
 			buzzer.GetComponent<Buzzer>().SetLight (true);
 			inputManager.TurnOn ();
 			countdownBar.GetComponent<CountdownBar> ().Reset ();

@@ -66,6 +66,8 @@ public class QuestionDisplay : MonoBehaviour {
 			// run client-side display
 			if (pb.state == Protobowl.GameState.RUNNING) {
 
+				pb.hasBuzz = false;
+
 				List<int> timing = Utils.convertJSONToList (pb.data ["timing"].AsArray);
 
 				if (localIndex < timing.Count) {

@@ -53,7 +53,6 @@ public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 			}
 		}
 		if (index != -1) {
-			print (index);
 			selectionArea.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (0, index * separationFactor);
 			selected = query;
 		}

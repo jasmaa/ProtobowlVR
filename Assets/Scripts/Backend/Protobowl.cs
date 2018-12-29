@@ -27,6 +27,9 @@ public class Protobowl {
 	public JSONNode args;
 	private JSONNode oldData;
 
+	public bool hasBuzz = false;
+	private bool awaitConfirmBuzz = false;
+
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
 
 	private string socketString;
@@ -75,6 +78,15 @@ public class Protobowl {
 			args = parsedData ["args"][0];
 			oldData = data;
 			data = Utils.MergeDict (data, args);
+
+			if (awaitConfirmBuzz) {
+				if (uid.Equals (args ["attempt"] ["user"])) {
+					hasBuzz = true;
+				} else {
+					hasBuzz = false;
+				}
+				awaitConfirmBuzz = false;
+			}
 		}
 		else if("joined".Equals(parsedData ["name"])){
 			uid = parsedData["args"][0]["id"];
@@ -169,6 +181,7 @@ public class Protobowl {
 	public void Buzz(){
 		// buzz
 		ws.Send ("5:23+::{\"name\":\"buzz\",\"args\":[\"" + data["qid"] + "\"]}");
+		awaitConfirmBuzz = true;
 	}
 	
 	public void Guess(string guess, bool done = false){
