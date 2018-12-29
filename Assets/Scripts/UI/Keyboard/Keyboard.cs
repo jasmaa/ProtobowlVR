@@ -17,15 +17,23 @@ public class Keyboard : MonoBehaviour {
 	private List<KeyboardButton> keyboardButtons;
 
 	private bool isShift = false;
+	private int cursorFlick = 0;
 
 	// Use this for initialization
 	void Start () {
 		keyboardButtons = new List<KeyboardButton> ();
 		BuildQWERTY ();
+		gameObject.SetActive (false);
 	}
 
 	void Update(){
+
 		keyboardDisplay.text = text;
+
+		if (cursorFlick < 50) {
+			keyboardDisplay.text += "|";
+		}
+		cursorFlick = (cursorFlick + 1) % 100;
 	}
 
 	public void ToggleShift(){

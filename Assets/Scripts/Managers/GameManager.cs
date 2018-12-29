@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 	// replace me with list later!!!!
 	public GameObject buzzer;
 	public GameObject optionMenu;
+	public GameObject keyboardVR;
 
 	public Transform rHand;
 	private Vector3 rHandOldPos;
@@ -37,20 +38,22 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		//print (client.pb.state);
 
+		// === Update based on state ===
+		if (client.pb.state == Protobowl.GameState.RUNNING) {
+			buzzer.GetComponent<Buzzer>().SetLight (false);
+			keyboardVR.SetActive (false);
+		}
+
 		// === Input Detection ===
 
 		// Buzz
 		var grabbedBy = buzzer.GetComponent<OVRGrabbable> ().grabbedBy;
 		if (grabbedBy != null) {
 			if("RightHandAnchor".Equals(grabbedBy.name) && OVRInput.Get(OVRInput.Button.One)){
-
-				client.pb.Buzz ();
-				buzzer.GetComponent<Buzzer>().SetLight (true);
+				PlayerBuzz ();
 			}
 			else if("LeftHandAnchor".Equals(grabbedBy.name) && OVRInput.Get(OVRInput.Button.Three)){
-
-				client.pb.Buzz ();
-				buzzer.GetComponent<Buzzer>().SetLight (true);
+				PlayerBuzz ();
 			}
 		}
 		// Next
@@ -76,5 +79,15 @@ public class GameManager : MonoBehaviour {
 
 		// Update cooldowns
 		optionMenuCooldown = Mathf.Clamp(optionMenuCooldown - Time.deltaTime, 0, 9999);
+	}
+
+	void PlayerBuzz(){
+		// Handles player buzz
+
+		client.pb.Buzz ();
+		if (client.pb.uid.Equals (client.pb.args ["attempt"] ["user"])) {
+			buzzer.GetComponent<Buzzer>().SetLight (true);
+			keyboardVR.SetActive (true);
+		}
 	}
 }

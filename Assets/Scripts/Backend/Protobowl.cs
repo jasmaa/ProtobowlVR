@@ -21,6 +21,7 @@ public class Protobowl {
 	}
 	public GameState state = GameState.NEW_Q;
 	public IDictionary<string, User> users = new Dictionary<string, User> ();
+	public string uid;
 
 	public JSONNode data = JSON.Parse("{}");
 	public JSONNode args;
@@ -74,6 +75,9 @@ public class Protobowl {
 			args = parsedData ["args"][0];
 			oldData = data;
 			data = Utils.MergeDict (data, args);
+		}
+		else if("joined".Equals(parsedData ["name"])){
+			uid = parsedData["args"][0]["id"];
 		}
 	}
 

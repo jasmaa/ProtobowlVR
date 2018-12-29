@@ -27,7 +27,7 @@ public class OptionList : MonoBehaviour {
 	public void ChooseCategory(){
 		if (selectedState == SelectedState.NONE) {
 			categoryWheel.SetActive (true);
-			//categoryWheel.GetComponent<SelectionWheel> ().SetSelected (GameManager.instance.client.pb.GetRoomCategory());
+			categoryWheel.GetComponent<SelectionWheel> ().SetSelected (GameManager.instance.client.pb.GetRoomCategory());
 			selectedState = SelectedState.CATEGORY;
 		}
 		else if (selectedState == SelectedState.CATEGORY) {
