@@ -1,21 +1,31 @@
 # TODO
 
   - Game
-    - Animated dummies representing opponents
+    - Backend
+	  - Deal with prompting
+	  - Improve sync
+	  
+    - Link game up with client
+	  - ~~Display question~~
+	  - ~~Allow for buzzing~~
+	  - ~~Allow for answering~~
+	  - Show other user buzzes
+	  - Show log
+	  - ~~Allow for setting changes and score view~~
 
   - Make art
-    - model and animate buzzer
+    - ~~model~~ and animate buzzer
     - model environment
 	- make fancy UI
 	- sounds
-	- text-to-speech reading??
+	- Animated dummies representing opponents
 	
   - Answering system
+    - Two handed typing
     - Typing or speech recognition?
+	- text-to-speech reading??
   
   - Integrate Oculus
-    - Buzzer should be able to be picked up
+    - ~~Buzzer should be able to be picked up~~
 	- Speech recognition to chat?
 	- Hand gestures to pause and skip????
-  
-  - Make backend client better?

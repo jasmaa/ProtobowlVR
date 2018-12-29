@@ -8,12 +8,19 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	public PBClient client;
 
+	public enum InputMode {
+		KEYBOARD,
+		SPEECH
+	}
+	public InputMode mode = InputMode.KEYBOARD;
+
 	public AudioSource testSound;
 
 	// replace me with list later!!!!
 	public GameObject buzzer;
 	public GameObject optionMenu;
 	public GameObject keyboardVR;
+	public GameObject countdownBar;
 
 	public Transform rHand;
 	private Vector3 rHandOldPos;
@@ -88,6 +95,7 @@ public class GameManager : MonoBehaviour {
 		if (client.pb.uid.Equals (client.pb.args ["attempt"] ["user"])) {
 			buzzer.GetComponent<Buzzer>().SetLight (true);
 			keyboardVR.SetActive (true);
+			countdownBar.GetComponent<CountdownBar> ().Reset ();
 		}
 	}
 }

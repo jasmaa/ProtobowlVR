@@ -199,6 +199,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62ce8b910fd79a47b8f12edecd9b30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMenuOpen: 0
+  categoryWheel: {fileID: 0}
+  difficultyWheel: {fileID: 0}
+  optionList: {fileID: 0}
 --- !u!114 &114897525384353246
 MonoBehaviour:
   m_ObjectHideFlags: 1
