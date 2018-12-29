@@ -8,26 +8,20 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	public PBClient client;
 
-	public enum InputMode {
-		KEYBOARD,
-		SPEECH
-	}
-	public InputMode mode = InputMode.KEYBOARD;
-
-	public AudioSource testSound;
-
 	// replace me with list later!!!!
 	public GameObject buzzer;
 	public GameObject optionMenu;
-	public GameObject keyboardVR;
 	public GameObject countdownBar;
+
+	public InputManager inputManager;
 
 	public Transform rHand;
 	private Vector3 rHandOldPos;
 	private Vector3 rHandDiff;
 
-	// COOLDOWNS
+	// COOLDOWNS and LOCKOUTS
 	private float optionMenuCooldown = 0;
+	private float buzzCooldown = 0;
 
 	void Start () {
 		if (instance == null) {
@@ -35,10 +29,8 @@ public class GameManager : MonoBehaviour {
 		} else {
 			Destroy (this.gameObject);
 		}
-
-		testSound = GetComponent<AudioSource> ();
+			
 		rHandOldPos = rHand.position;
-		optionMenu = GameObject.Find ("OptionMenu");
 	}
 	
 	// Update is called once per frame
@@ -48,7 +40,8 @@ public class GameManager : MonoBehaviour {
 		// === Update based on state ===
 		if (client.pb.state == Protobowl.GameState.RUNNING) {
 			buzzer.GetComponent<Buzzer>().SetLight (false);
-			keyboardVR.SetActive (false);
+			inputManager.TurnOff ();
+			buzzCooldown = 0;
 		}
 
 		// === Input Detection ===
@@ -86,15 +79,22 @@ public class GameManager : MonoBehaviour {
 
 		// Update cooldowns
 		optionMenuCooldown = Mathf.Clamp(optionMenuCooldown - Time.deltaTime, 0, 9999);
+		buzzCooldown = Mathf.Clamp(buzzCooldown - Time.deltaTime, 0, 9999);
 	}
 
 	void PlayerBuzz(){
 		// Handles player buzz
+		//if (buzzCooldown != 0) {
+		//	return;
+		//}
 
 		client.pb.Buzz ();
+		buzzCooldown = 2;
+
 		if (client.pb.uid.Equals (client.pb.args ["attempt"] ["user"])) {
+
 			buzzer.GetComponent<Buzzer>().SetLight (true);
-			keyboardVR.SetActive (true);
+			inputManager.TurnOn ();
 			countdownBar.GetComponent<CountdownBar> ().Reset ();
 		}
 	}

@@ -18,13 +18,13 @@ public class CountdownBar : MonoBehaviour {
 		backingBar.SetActive (false);
 		movingBar.SetActive (false);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		currTime = Mathf.Clamp(currTime - Time.deltaTime, 0, attemptTime);
 		movingBar.transform.GetComponent<RectTransform> ().localScale = new Vector3 (initScale * currTime / attemptTime, initScale, initScale);
 
-		if (currTime == 0) {
+		if (currTime == 0 || GameManager.instance.client.pb.state != Protobowl.GameState.BUZZED) {
 			backingBar.SetActive (false);
 			movingBar.SetActive (false);
 		}

@@ -36,6 +36,10 @@ public class Keyboard : MonoBehaviour {
 		cursorFlick = (cursorFlick + 1) % 100;
 	}
 
+	public void ClearText(){
+		text = "";
+	}
+
 	public void ToggleShift(){
 		isShift = !isShift;
 		SetShift (isShift);
