@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour {
 		//print (client.pb.state);
 
 		// === Update based on state ===
-		if (stateUpdateCooldown == 0 && client.pb.state == Protobowl.GameState.RUNNING) {
+		if (stateUpdateCooldown == 0 && client.pb.state != Protobowl.GameState.BUZZED) {
 			buzzer.GetComponent<Buzzer>().SetLight (false);
 			inputManager.TurnOff ();
 			buzzLockout = false;

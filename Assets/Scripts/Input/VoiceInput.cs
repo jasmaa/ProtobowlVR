@@ -11,17 +11,25 @@ public class VoiceInput : MonoBehaviour {
 	void Start () {
 		recognizer = new DictationRecognizer ();
 		recognizer.DictationResult += (text, confidence) => {
-			print(text);
-			GameManager.instance.client.pb.Guess(text, true);
+			if(!"".Equals(text)){
+				GameManager.instance.client.pb.Guess(text, true);
+				TurnOff();
+			}
 		};
 	}
 
 	public void TurnOn(){
-		recognizer.Start ();
+		if (recognizer.Status == SpeechSystemStatus.Stopped) {
+			recognizer.Start ();
+		}
 	}
 	public void TurnOff(){
 		if (recognizer.Status == SpeechSystemStatus.Running) {
 			recognizer.Stop ();
 		}
+	}
+
+	void OnDestroy(){
+		recognizer.Dispose ();
 	}
 }

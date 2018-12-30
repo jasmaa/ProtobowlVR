@@ -58,7 +58,6 @@ public class Protobowl {
 					UpdateData(e.Data);
 					UpdateState();
 					UpdateUsers();
-					Ping();
 				};
 
 				ws.Connect ();
@@ -187,6 +186,7 @@ public class Protobowl {
 	public void Guess(string guess, bool done = false){
 		// guess answer
 		ws.Send ("5:::{\"name\":\"guess\",\"args\":[{\"text\":\"" + guess + "\",\"done\":" + done.ToString().ToLower() + "},null]}");
+		Debug.Log (guess);
 	}
 	
 	public void Next(){

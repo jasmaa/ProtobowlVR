@@ -93,6 +93,8 @@ public class PBStateTracker : MonoBehaviour {
 			}
 
 			//print (pb.state);
+
+			pb.Ping ();
 		}
 	}
 }
