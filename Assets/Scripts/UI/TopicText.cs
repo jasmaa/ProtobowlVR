@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TopicText : MonoBehaviour {
-	// Updates text with topic
+	/// <summary>
+	/// Updates text with question topic
+	/// <summary>
 
 	private Text topicText;
 

@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UserList : MonoBehaviour {
-	// Keeps a list of users in the room
+	/// <summary>
+	/// Keeps a list of users and scores in the room
+	/// </summary>
 
 	public GameObject userWidgetTemplate;
 
@@ -20,7 +22,10 @@ public class UserList : MonoBehaviour {
 	}
 
 	void UpdateUsers(){
-
+		/// <summary>
+		/// Rebuild updated user list
+		/// </summary>
+	
 		// empty old
 		foreach (GameObject userWidget in userWidgets) {
 			Destroy (userWidget);

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CountdownBar : MonoBehaviour {
+	/// <summary>
+	/// Displays buzz countdown time
+	/// </summary>
 
 	public GameObject movingBar;
 	public GameObject backingBar;

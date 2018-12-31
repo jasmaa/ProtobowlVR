@@ -5,7 +5,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
-	// Selection wheel for list of strings
+	/// <summary>
+	/// Selection wheel widget for selecting from a list of options
+	/// </summary>
 
 	public GameObject selectionTextTemplate;
 	private List<GameObject> selectionTexts;
@@ -34,11 +36,18 @@ public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 	}
 
 	public string GetSelected(){
+		/// <summary>
+		/// Get selected string
+		/// </summary>
+		
 		return selected;
 	}
 
 	public void SetSelected(string query){
-
+		/// <summary>
+		/// Set wheel's state based on query
+		/// </summary>
+	
 		query = ParseQuery (query);
 
 		if (query.Equals (selected)) {
@@ -87,6 +96,10 @@ public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 	}
 
 	private string ParseQuery(string s){
+		/// <summary>
+		/// Parse special queries from category and difficulty lists
+		/// </summary>
+		
 		if ("Everything".Equals(s) || "Any".Equals(s)) {
 			return "";
 		}

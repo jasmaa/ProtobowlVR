@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Rope : MonoBehaviour {
-	// Rope physics
+	/// <summary>
+	/// Physics rope with static src and movable target
+	/// </summary>
 
 	public LineRenderer lineRenderer;
 	private List<GameObject> joints;

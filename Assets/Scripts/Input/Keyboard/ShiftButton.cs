@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ShiftButton : MonoBehaviour {
-	// VR keyboard shift button
+	/// <summary>
+	/// VR keyboard shift button
+	/// </summary>
+	
 	public Keyboard keyboard;
 
 	void Start () {

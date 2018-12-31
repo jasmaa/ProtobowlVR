@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OptionList : MonoBehaviour {
-	// Handles selectable options
+	/// <summary>
+	/// Handles selectable options
+	/// </summary>
 
 	private GameObject categoryWheel;
 	private GameObject difficultyWheel;
@@ -24,13 +26,17 @@ public class OptionList : MonoBehaviour {
 	}
 
 	public void ResetState(){
-		// Reset option menu state
+		/// <summary>
+		/// Reset option menu state
+		/// </summary>
 
 		selectedState = SelectedState.NONE;
 	}
 
 	public void ChooseProfile(){
-		// Toggle profile option menu
+		/// <summary>
+		/// Toggle profile option menu
+		/// </summary>
 
 		if (selectedState == SelectedState.NONE) {
 			profileOptions.SetActive (true);
@@ -43,7 +49,9 @@ public class OptionList : MonoBehaviour {
 	}
 
 	public void ChooseCategory(){
-		// Toggle category options
+		/// <summary>
+		/// Toggle category options
+		/// </summary>
 
 		if (selectedState == SelectedState.NONE) {
 			categoryWheel.SetActive (true);
@@ -61,7 +69,9 @@ public class OptionList : MonoBehaviour {
 	}
 
 	public void ChooseDifficulty(){
-		// Toggle difficulty options
+		/// <summary>
+		/// Toggle difficulty options
+		/// </summary>
 
 		if (selectedState == SelectedState.NONE) {
 			difficultyWheel.SetActive (true);
@@ -79,6 +89,10 @@ public class OptionList : MonoBehaviour {
 	}
 
 	public void ChooseLeave(){
+		/// <summary>
+		/// Leave room
+		/// </summary>
+		
 		GameManager.instance.client.pb.Disconnect ();
 
 		// send player back to hub here!!!!!!!!!!!!

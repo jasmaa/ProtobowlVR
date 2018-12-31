@@ -6,8 +6,10 @@ using UnityEngine;
 using SimpleJSON;
 
 public class PBStateTracker : MonoBehaviour {
-	// Handles question display and game state
-
+	/// <summary>
+	/// Handles question display and game state
+	/// </summary>
+	
 	public Protobowl pb;
 	private float localTime = 0;
 	private int localIndex = 0;
@@ -25,13 +27,19 @@ public class PBStateTracker : MonoBehaviour {
 	}
 
 	void PlayQuestion(){
+		/// <summary>
+		/// Sets up tracker
+		/// </summary>
+		
 		InitDisp ();
 		StartCoroutine (UpdateDisp());
 	}
 
 	void InitDisp(){
-		// init display
-
+		/// <summary>
+		/// Set tracker to initial display and state
+		/// </summary>
+		
 		var timePassed = pb.data ["real_time"].AsLong - pb.data ["time_offset"].AsLong - pb.data ["begin_time"].AsLong;
 
 		if (pb.state == Protobowl.GameState.BUZZED) {
@@ -55,7 +63,10 @@ public class PBStateTracker : MonoBehaviour {
 	}
 
 	IEnumerator UpdateDisp(){
-		// update display
+		/// <summary>
+		/// Update display and state
+		/// </summary>
+		
 		while (true) {
 			if (!pb.isConnected ()) {
 				continue;
@@ -96,8 +107,7 @@ public class PBStateTracker : MonoBehaviour {
 				disp = pb.data ["question"];
 			}
 
-			//print (pb.state);
-
+			// ping server
 			pb.Ping ();
 		}
 	}

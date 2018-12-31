@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Keyboard : MonoBehaviour {
-	// VR keyboard
+	/// <summary>
+	/// VR keyboard
+	/// </summary>
 
 	public string text;
 	public GameObject keyboardButtonTemplate;
@@ -37,26 +39,46 @@ public class Keyboard : MonoBehaviour {
 	}
 
 	public void ClearText(){
+		/// <summary>
+		/// Clears keyboard input text
+		/// </summary>
+		
 		text = "";
 	}
 
 	public void ToggleShift(){
+		/// <summary>
+		/// Toggle shift mode
+		/// </summary>
+		
 		isShift = !isShift;
 		SetShift (isShift);
 	}
 	public void SetShift(bool shift){
+		/// <summary>
+		/// Set shift mode on or off
+		/// </summary>
+		
 		foreach (KeyboardButton keyboardButton in keyboardButtons) {
 			keyboardButton.SetShift (shift);
 		}
 	}
 
 	public void Backspace(){
+		/// <summary>
+		/// Backspace
+		/// </summary>
+		
 		if (text.Length > 0) {
 			text = text.Substring (0, text.Length - 1);
 		}
 	}
 
 	void BuildQWERTY(){
+		/// <summary>
+		/// Build a bare bones QWERTY keyboard
+		/// </summary>
+		
 		// build row 1
 		string[] rowMain1 = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=" };
 		string[] rowShift1 = { "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+" };
@@ -125,6 +147,14 @@ public class Keyboard : MonoBehaviour {
 	}
 
 	void AddKey(GameObject template, Vector2 pos, string mainChar, string shiftChar){
+		/// <summary>
+		/// Adds a normal key to keyboard
+		/// </summary>
+		/// <param name="template">Normal key GameObject template</param>
+		/// <param name="pos">Position of the key</param>
+		/// <param name="mainChar">Unshifted character</param>
+		/// <param name="shiftChar">Shifted character</param>
+		
 		GameObject key = Instantiate (template, transform);
 
 		KeyboardButton keyboardButton = key.GetComponent<KeyboardButton> ();
@@ -138,6 +168,12 @@ public class Keyboard : MonoBehaviour {
 	}
 
 	void AddFuncKey(GameObject template, Vector2 pos){
+		/// <summary>
+		/// Adds a function key to keyboard
+		/// </summary>
+		/// <param name="template">Normal key GameObject template</param>
+		/// <param name="pos">Position of the key</param>
+		
 		GameObject key = Instantiate (template, transform);
 		key.GetComponent<RectTransform> ().anchoredPosition = pos;
 	}

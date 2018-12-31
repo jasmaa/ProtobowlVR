@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OptionMenu : MonoBehaviour {
-	// Controls opening/closing menu
+	/// <summary>
+	/// Controls option menu while in a game room
+	/// </summary>
 
 	public bool isMenuOpen = false;
 
@@ -33,6 +35,11 @@ public class OptionMenu : MonoBehaviour {
 	}
 
 	public void Open(Transform hand){
+		/// <summary>
+		/// Open menu
+		/// </summary>
+		/// <param name="hand">Transform to spawn menu</param>
+		
 		if (!isMenuOpen) {
 			transform.position = hand.position;
 			offset = transform.position - player.transform.position;
@@ -42,6 +49,10 @@ public class OptionMenu : MonoBehaviour {
 		}
 	}
 	public void Close(){
+		/// <summary>
+		/// Close menu
+		/// </summary>
+		
 		if(isMenuOpen && Vector3.Dot(-transform.forward, player.transform.forward) > 0.9) {
 			isMenuOpen = false;
 			optionList.GetComponent<OptionList> ().ResetState ();

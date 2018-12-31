@@ -5,10 +5,15 @@ using UnityEngine;
 using SimpleJSON;
 
 public static class Utils {
-	// Utils for processing data
+	/// <summary>
+	/// Utils for processing data
+	/// </summary>
 
 	public static List<int> convertJSONToList(JSONArray arr){
-		// converts json array to int list
+		/// <summary>
+		/// Convert JSONArray to int List
+		/// </summary>
+		/// <param name="arr">JSONArray to convert</param>
 
 		List<int> retList = new List<int> ();
 		foreach (JSONNode element in arr) {
@@ -18,7 +23,11 @@ public static class Utils {
 	}
 
 	public static bool containsKey(string target, JSONNode dict){
-		// Checks if JSON node contains key
+		/// <summary>
+		/// Check if JSONNode contains string key
+		/// </summary>
+		/// <param name="target">Target key to look for</param>
+		/// <param name="dict">JSONNode to search through</param>
 
 		foreach (var key in dict.Keys) {
 			if(target.Equals(key)){
@@ -29,7 +38,11 @@ public static class Utils {
 	}
 
 	public static JSONNode MergeDict(JSONNode src, JSONNode addition){
-		// Merge two JSONNodes precedenting addition
+		/// <summary>
+		/// Merge two JSONNodes, preferring new mappings over old
+		/// </summary>
+		/// <param name="src">Original node to add to</param>
+		/// <param name="addition">Node updating src node</param>
 
 		JSONNode ret = JSON.Parse ("{}");
 		foreach (var key in src.Keys) {

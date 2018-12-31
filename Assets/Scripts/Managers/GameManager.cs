@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
-	// Manages front end game
+	/// <summary>
+	/// Manages front end game
+	/// </summary>
 
 	public static GameManager instance;
 	public PBClient client;
@@ -34,7 +36,6 @@ public class GameManager : MonoBehaviour {
 		rHandOldPos = rHand.position;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		//print (client.pb.state);
 
@@ -86,7 +87,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void PlayerBuzz(){
-		// Handles player buzz
+		/// <summary>
+		/// Handle player buzz
+		/// </summary>
+		
 		if (buzzLockout) {
 			return;
 		}
@@ -97,6 +101,10 @@ public class GameManager : MonoBehaviour {
 		Invoke ("DetectBuzz", 0.1f);
 	}
 	void DetectBuzz(){
+		/// <summary>
+		/// Detect and update client if player claimed the buzz
+		/// </summary>
+		
 		if (client.pb.hasBuzz) {
 			buzzer.GetComponent<Buzzer>().SetLight (true);
 			inputManager.TurnOn ();

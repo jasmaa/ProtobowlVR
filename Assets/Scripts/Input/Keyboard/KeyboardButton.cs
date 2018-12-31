@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class KeyboardButton : MonoBehaviour {
-	// VR keyboard key
+	/// <summary>
+	/// VR keyboard key
+	/// </summary>
 
 	public string mainChar;
 	public string shiftChar;
@@ -21,11 +23,19 @@ public class KeyboardButton : MonoBehaviour {
 	}
 
 	public void Init(){
+		/// <summary>
+		/// Initialize key
+		/// </summary>
+		
 		currChar = mainChar;
 		transform.GetChild(0).GetComponent<Text> ().text = currChar;
 	}
 
 	public void SetShift(bool shift){
+		/// <summary>
+		/// Set shift mode
+		/// </summary>
+		
 		currChar = shift ? shiftChar : mainChar;
 		transform.GetChild(0).GetComponent<Text> ().text = currChar;
 	}

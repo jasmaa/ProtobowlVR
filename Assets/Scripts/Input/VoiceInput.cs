@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.Windows.Speech;
 
 public class VoiceInput : MonoBehaviour {
-	// Speech recognizer for Windows
-
+	/// <summary>
+	/// Speech recognizer for Windows
+	/// <summary>
+	
 	DictationRecognizer recognizer;
 
 	void Start () {
@@ -19,11 +21,19 @@ public class VoiceInput : MonoBehaviour {
 	}
 
 	public void TurnOn(){
+		/// <summary>
+		/// Open for input
+		/// </summary>
+		
 		if (recognizer.Status == SpeechSystemStatus.Stopped) {
 			recognizer.Start ();
 		}
 	}
 	public void TurnOff(){
+		/// <summary>
+		/// Close out any further input
+		/// </summary>
+		
 		if (recognizer.Status == SpeechSystemStatus.Running) {
 			recognizer.Stop ();
 		}

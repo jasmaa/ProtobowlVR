@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class User {
-	// Protobowl user object
+	/// <summary>
+	/// Protobowl user object
+	/// </summary>
 
 	public string id;
 	public string name;

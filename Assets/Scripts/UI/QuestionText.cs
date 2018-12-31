@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class QuestionText : MonoBehaviour {
-	// Updates text with question
+	/// <summary>
+	/// Updates text with current question text
+	/// </summary>
 
 	private Text questionText;
 
