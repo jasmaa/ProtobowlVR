@@ -12,6 +12,9 @@
 	  - Show other user buzzes
 	  - Show log
 	  - ~~Allow for setting changes and score view~~
+	
+	- Make a main hub
+	  - Deal with / fix freeze on disconnect
 
   - Make art
     - ~~model~~ and animate buzzer
@@ -22,7 +25,7 @@
 	
   - Answering system
     - Two handed typing
-    - Typing or speech recognition?
+    - ~~Typing or speech recognition?~~
 	- text-to-speech reading??
   
   - Integrate Oculus

@@ -9,6 +9,7 @@ public class OptionMenu : MonoBehaviour {
 
 	public GameObject categoryWheel;
 	public GameObject difficultyWheel;
+	public GameObject profileOptions;
 	public GameObject optionList;
 
 	private GameObject player;
@@ -46,6 +47,8 @@ public class OptionMenu : MonoBehaviour {
 			optionList.GetComponent<OptionList> ().ResetState ();
 			categoryWheel.SetActive(false);
 			difficultyWheel.SetActive(false);
+			profileOptions.SetActive (false);
+
 			ani.Play ("OptionMenuClose");
 		}
 	}

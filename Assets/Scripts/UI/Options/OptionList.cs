@@ -7,8 +7,10 @@ public class OptionList : MonoBehaviour {
 
 	private GameObject categoryWheel;
 	private GameObject difficultyWheel;
+	private GameObject profileOptions;
 
 	private enum SelectedState {
+		PROFILE,
 		CATEGORY,
 		DIFFICULTY,
 		NONE
@@ -18,13 +20,31 @@ public class OptionList : MonoBehaviour {
 	void Start(){
 		categoryWheel = transform.Find ("CategoryWheel").gameObject;
 		difficultyWheel = transform.Find ("DifficultyWheel").gameObject;
+		profileOptions = transform.Find ("ProfileOptions").gameObject;
 	}
 
 	public void ResetState(){
+		// Reset option menu state
+
 		selectedState = SelectedState.NONE;
 	}
 
+	public void ChooseProfile(){
+		// Toggle profile option menu
+
+		if (selectedState == SelectedState.NONE) {
+			profileOptions.SetActive (true);
+			selectedState = SelectedState.PROFILE;
+		}
+		else if (selectedState == SelectedState.PROFILE) {
+			profileOptions.SetActive (false);
+			selectedState = SelectedState.NONE;
+		}
+	}
+
 	public void ChooseCategory(){
+		// Toggle category options
+
 		if (selectedState == SelectedState.NONE) {
 			categoryWheel.SetActive (true);
 			categoryWheel.GetComponent<SelectionWheel> ().SetSelected (GameManager.instance.client.pb.GetRoomCategory());
@@ -41,6 +61,8 @@ public class OptionList : MonoBehaviour {
 	}
 
 	public void ChooseDifficulty(){
+		// Toggle difficulty options
+
 		if (selectedState == SelectedState.NONE) {
 			difficultyWheel.SetActive (true);
 			difficultyWheel.GetComponent<SelectionWheel> ().SetSelected (GameManager.instance.client.pb.GetDifficulty());
@@ -54,5 +76,11 @@ public class OptionList : MonoBehaviour {
 			difficultyWheel.SetActive (false);
 			selectedState = SelectedState.NONE;
 		}
+	}
+
+	public void ChooseLeave(){
+		GameManager.instance.client.pb.Disconnect ();
+
+		// send player back to hub here!!!!!!!!!!!!
 	}
 }

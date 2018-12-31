@@ -33,12 +33,14 @@ public class Protobowl {
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
 
 	private string socketString;
-	private string cookie = "derp";
+	private string cookie;
 	private WebSocket ws;
-	
-	public IEnumerator Init(){
+	private bool connected = false;
+
+	public IEnumerator Connect(string roomName, string cookie){
 		// Initialize socket
-		
+		this.cookie = cookie;
+
 		// get socket id
 		using (UnityWebRequest www = UnityWebRequest.Get("http://"+server)) {
 			yield return www.SendWebRequest ();
@@ -52,8 +54,11 @@ public class Protobowl {
 				socketString = www.downloadHandler.text.Split (':')[0];
 				ws = new WebSocket ("ws://" + server + socketString);
 
-				ws.OnMessage += (sender, e) => {
+				ws.OnOpen += (sender, e) => {
+					connected = true;
+				};
 
+				ws.OnMessage += (sender, e) => {
 					// Update data on websocket sync
 					UpdateData(e.Data);
 					UpdateState();
@@ -62,11 +67,22 @@ public class Protobowl {
 
 				ws.Connect ();
 
-				// TEMP: join room
-				JoinRoom ("bot-testing-vr");
-				SetName ("Unity Bot");
+				// join room
+				JoinRoom (roomName);
 			}
 		}
+	}
+
+	public void Disconnect(){
+		// Disconnect socket
+		if (connected) {
+			connected = false;
+			ws.Close ();
+		}
+	}
+
+	public bool isConnected(){
+		return connected;
 	}
 
 	private void UpdateData(string rawData){
@@ -208,9 +224,14 @@ public class Protobowl {
 		// unpause question
 		ws.Send ("5:::{\"name\":\"unpause\",\"args\":[null,null]}");
 	}
-	
+
+	public void ResetScore(){
+		// reset score
+		ws.Send ("5:::{\"reset_score\":\"pause\",\"args\":[null,null]}");
+	}
+
 	public void Ping(){
-		// unpause question
+		// ping
 		ws.Send ("2::");
 	}
 	

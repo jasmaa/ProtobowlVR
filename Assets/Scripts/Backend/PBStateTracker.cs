@@ -57,6 +57,10 @@ public class PBStateTracker : MonoBehaviour {
 	IEnumerator UpdateDisp(){
 		// update display
 		while (true) {
+			if (!pb.isConnected ()) {
+				continue;
+			}
+
 			// detect new question
 			if (pb.state == Protobowl.GameState.NEW_Q) {
 				pb.state = Protobowl.GameState.RUNNING;

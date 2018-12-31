@@ -11,10 +11,12 @@ public class PBClient : MonoBehaviour {
 	void Start () {
 
 		pb = new Protobowl ();
-		StartCoroutine(pb.Init ());
+		StartCoroutine(pb.Connect ("bot-testing-vr", "derp"));
 
 		tracker.pb = pb;
-
 	}
 
+	void OnDestroy(){
+		pb.Disconnect ();
+	}
 }
