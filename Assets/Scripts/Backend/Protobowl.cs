@@ -293,7 +293,7 @@ public class Protobowl {
 		/// Reset user score
 		/// </summary>
 		
-		ws.Send ("5:::{\"reset_score\":\"pause\",\"args\":[null,null]}");
+		ws.Send ("5:::{\"name\":\"reset_score\",\"args\":[null,null]}");
 	}
 
 	public void Ping(){
