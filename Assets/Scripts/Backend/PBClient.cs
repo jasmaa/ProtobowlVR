@@ -13,7 +13,7 @@ public class PBClient : MonoBehaviour {
 	void Start () {
 
 		pb = new Protobowl ();
-		StartCoroutine(pb.Connect ("bot-testing-vr", "derp"));
+		StartCoroutine(pb.Connect (UserData.instance.room, UserData.instance.cookie));
 
 		tracker.pb = pb;
 	}

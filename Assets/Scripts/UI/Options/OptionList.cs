@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OptionList : MonoBehaviour {
 	/// <summary>
@@ -96,5 +97,6 @@ public class OptionList : MonoBehaviour {
 		GameManager.instance.client.pb.Disconnect ();
 
 		// send player back to hub here!!!!!!!!!!!!
+		SceneManager.LoadScene("HubVR");
 	}
 }

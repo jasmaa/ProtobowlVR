@@ -2,11 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Keyboard : MonoBehaviour {
 	/// <summary>
-	/// VR keyboard
+	/// VR keyboard for Protobowl input fields
 	/// </summary>
+
+	public enum KeyboardType {
+		BUZZ,
+		JOIN_ROOM,
+		CHANGE_NAME,
+		CHAT
+	}
+	public KeyboardType keyboardType;
 
 	public string text;
 	public GameObject keyboardButtonTemplate;
@@ -25,7 +34,6 @@ public class Keyboard : MonoBehaviour {
 	void Start () {
 		keyboardButtons = new List<KeyboardButton> ();
 		BuildQWERTY ();
-		gameObject.SetActive (false);
 	}
 
 	void Update(){
@@ -176,5 +184,23 @@ public class Keyboard : MonoBehaviour {
 		
 		GameObject key = Instantiate (template, transform);
 		key.GetComponent<RectTransform> ().anchoredPosition = pos;
+	}
+
+	public void Submit(){
+		switch(keyboardType){
+			case  KeyboardType.BUZZ:
+				GameManager.instance.client.pb.Guess(text, true);
+				break;
+		case  KeyboardType.JOIN_ROOM:
+				UserData.instance.room = text;
+				SceneManager.LoadScene("GameRoomVR");
+				break;
+			case  KeyboardType.CHANGE_NAME:
+				GameManager.instance.client.pb.SetName(text);
+				break;
+			case  KeyboardType.CHAT:
+				GameManager.instance.client.pb.Chat(text, true);
+				break;
+		}
 	}
 }

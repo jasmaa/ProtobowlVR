@@ -16,6 +16,10 @@ public class InputManager : MonoBehaviour {
 	public GameObject keyboardVR;
 	public VoiceInput voiceInput;
 
+	void Start(){
+		TurnOff ();
+	}
+
 	public void TurnOn(){
 		/// <summary>
 		/// Open for input
