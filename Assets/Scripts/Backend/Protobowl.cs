@@ -63,6 +63,9 @@ public class Protobowl {
 
 				ws.OnOpen += (sender, e) => {
 					connected = true;
+
+					// join room
+					JoinRoom (roomName);
 				};
 
 				ws.OnMessage += (sender, e) => {
@@ -72,10 +75,7 @@ public class Protobowl {
 					UpdateUsers();
 				};
 
-				ws.Connect ();
-
-				// join room
-				JoinRoom (roomName);
+				ws.ConnectAsync ();
 			}
 		}
 	}
@@ -87,7 +87,7 @@ public class Protobowl {
 		
 		if (connected) {
 			connected = false;
-			ws.Close ();
+			ws.CloseAsync ();
 		}
 	}
 
