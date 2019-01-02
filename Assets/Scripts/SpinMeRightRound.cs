@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class SpinMeRightRound : MonoBehaviour {
 	/// <summary>
-	/// Spins me right round, baby, right round on the y axis
+	/// Spins me right round, baby, right round on axis
 	/// </summary>
-	
+
+	public Vector3 axis;
+
 	void Update () {
-		gameObject.transform.Rotate (new Vector3(0, 1, 0));
+		gameObject.transform.Rotate (axis);
 	}
 }

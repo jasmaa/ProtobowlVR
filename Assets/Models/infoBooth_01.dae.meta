@@ -1,36 +1,22 @@
 fileFormatVersion: 2
-guid: 31c43ce8833457f499fba9aa4f2549a4
+guid: e13dd14d23789194fa9ea6bcd793ca24
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Floor
+    100000: Booth
     100002: //RootNode
-    100004: Pillars
-    100006: WallBack
-    100008: WallFront
-    100010: WallSides
-    400000: Floor
+    100004: RingSign
+    400000: Booth
     400002: //RootNode
-    400004: Pillars
-    400006: WallBack
-    400008: WallFront
-    400010: WallSides
-    2100000: No Name
-    2300000: Floor
-    2300002: Pillars
-    2300004: WallBack
-    2300006: WallFront
-    2300008: WallSides
-    3300000: Floor
-    3300002: Pillars
-    3300004: WallBack
-    3300006: WallFront
-    3300008: WallSides
-    4300000: Floor
-    4300002: Pillars
-    4300004: WallSides
-    4300006: WallBack
-    4300008: WallFront
+    400004: RingSign
+    2100000: Material_002
+    2100002: Material_001
+    2300000: Booth
+    2300002: RingSign
+    3300000: Booth
+    3300002: RingSign
+    4300000: Booth
+    4300002: RingSign
   externalObjects: {}
   materials:
     importMaterials: 1
