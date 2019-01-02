@@ -193,6 +193,9 @@ public class Keyboard : MonoBehaviour {
 				break;
 		case  KeyboardType.JOIN_ROOM:
 				UserData.instance.room = text;
+				
+				print (UserData.instance.room);
+
 				SceneManager.LoadScene("GameRoomVR");
 				break;
 			case  KeyboardType.CHANGE_NAME:

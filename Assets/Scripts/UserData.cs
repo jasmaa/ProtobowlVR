@@ -14,7 +14,7 @@ public class UserData : MonoBehaviour {
 	public string cookie = "derp";
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		if (instance == null) {
 			instance = this;
 		} else {
