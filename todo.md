@@ -2,8 +2,8 @@
 
   - Game
     - Backend
-	  - Deal with prompting
-	  - Improve sync
+	  - ~~Deal with prompting~~
+	  - ~~Improve sync~~
 	  
     - Link game up with client
 	  - ~~Display question~~
@@ -13,8 +13,11 @@
 	  - Show log
 	  - ~~Allow for setting changes and score view~~
 	
-	- Make a main hub
-	  - Deal with / fix freeze on disconnect
+	- ~~Make a main hub~~
+	  - ~~Deal with / fix freeze on disconnect~~
+	
+	- VR specific
+	  - Personal score card (displays score and current name with ability to change)
 
   - Make art
     - ~~model~~ and animate buzzer

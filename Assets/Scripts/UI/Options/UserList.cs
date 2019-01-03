@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 /// <summary>
 /// Keeps a list of users and scores in the room
@@ -12,13 +13,11 @@ public class UserList : MonoBehaviour {
 
 	private List<GameObject> userWidgets;
 
-
 	void Start(){
 		userWidgets = new List<GameObject> ();
 	}
 
 	void Update(){
-		//TODO: only update when new user id added to set
 		UpdateUsers ();
 	}
 
@@ -35,7 +34,9 @@ public class UserList : MonoBehaviour {
 
 		// re-add new users
 		int count = 0;
-		foreach(User user in GameManager.instance.client.pb.users.Values){
+		List<User> sortedUsers = GameManager.instance.client.pb.users.Values.ToList();
+		sortedUsers.Sort ((User a, User b) => b.score - a.score);
+		foreach(User user in sortedUsers){
 			GameObject userWidget = Instantiate(userWidgetTemplate, transform);
 			userWidget.transform.Find ("UserName").GetComponent<Text>().text = user.name;
 			userWidget.transform.Find ("UserScore").GetComponent<Text>().text = user.score+"";

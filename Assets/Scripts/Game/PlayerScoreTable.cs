@@ -12,8 +12,19 @@ public class PlayerScoreTable : MonoBehaviour {
 	private string uid;
 
 	void Update(){
-		if (uid != null && GameManager.instance.client.pb.users.ContainsKey(uid)) {
+
+		if (uid == null) {
+			return;
+		}
+
+		// Update name board
+		if (GameManager.instance.client.pb.users.ContainsKey(uid)) {
 			transform.Find("NameBoard").GetChild(0).GetChild(0).GetComponent<Text>().text = GameManager.instance.client.pb.users [uid].name;
+		}
+
+		// Check if buzzed
+		if(GameManager.instance.client.pb.state == Protobowl.GameState.BUZZED && uid.Equals(GameManager.instance.client.pb.buzzUid)){
+			print (GameManager.instance.client.pb.users [uid].name + " is buzzing");
 		}
 	}
 

@@ -31,6 +31,8 @@ public class Protobowl {
 
 	public bool hasBuzz = false;
 	private bool awaitConfirmBuzz = false;
+	public string buzzUid;
+	public Stack<JSONNode> logStack = new Stack<JSONNode>();
 
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
 
@@ -107,23 +109,24 @@ public class Protobowl {
 		
 		JSONNode parsedData = JSON.Parse (rawData.Substring(4));
 
-		if ("sync".Equals(parsedData ["name"])) {
-			args = parsedData ["args"][0];
+		if ("sync".Equals (parsedData ["name"])) {
+			args = parsedData ["args"] [0];
 			oldData = data;
 			data = Utils.MergeDict (data, args);
 
+			buzzUid = args ["attempt"] ["user"];
+
 			// Determine if user can claim buzz
 			if (awaitConfirmBuzz) {
-				if (uid.Equals (args ["attempt"] ["user"])) {
-					hasBuzz = true;
-				} else {
-					hasBuzz = false;
-				}
+				hasBuzz = uid.Equals (buzzUid);
 				awaitConfirmBuzz = false;
 			}
 		}
-		else if("joined".Equals(parsedData ["name"])){
-			uid = parsedData["args"][0]["id"];
+		else if ("joined".Equals (parsedData ["name"])) {
+			uid = parsedData ["args"] [0] ["id"];
+		}
+		else if ("log".Equals (parsedData ["name"])) {
+			logStack.Push (parsedData ["args"] [0]);
 		}
 	}
 
