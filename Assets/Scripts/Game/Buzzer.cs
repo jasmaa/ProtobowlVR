@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls buzzer GameObject
+/// </summary>
 public class Buzzer : MonoBehaviour {
-	/// <summary>
-	/// Controls buzzer GameObject
-	/// </summary>
 
 	public Material onMat;
 	public Material offMat;
@@ -15,10 +15,10 @@ public class Buzzer : MonoBehaviour {
 		SetLight (false);
 	}
 
+	/// <summary>
+	/// Toggle light
+	/// </summary>
 	public void SetLight(bool value){
-		/// <summary>
-		/// Toggle light
-		/// </summary>
 		
 		if (value) {
 			transform.Find("Light").transform.GetComponent<Renderer>().material = onMat;

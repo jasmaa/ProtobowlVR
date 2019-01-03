@@ -2,24 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Commands for profile option
+/// </summary>
 public class ProfileOptions : MonoBehaviour {
-	/// <summary>
-	/// Commands for profile option
-	/// </summary>
 
+	/// <summary>
+	/// Reset user score
+	/// </summary>
 	public void ResetScore(){
-		/// <summary>
-		/// Reset user score
-		/// </summary>
-		
 		GameManager.instance.client.pb.ResetScore ();
 	}
 
+	/// <summary>
+	/// Reset room layout to original state
+	/// </summary>
 	public void ResetRoom(){
-		/// <summary>
-		/// Reset room layout to original state
-		/// </summary>
-		
-		print ("reset room layout here");
+		//TODO: Reset room layout here
 	}
 }

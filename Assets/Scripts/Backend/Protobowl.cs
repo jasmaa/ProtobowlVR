@@ -91,6 +91,10 @@ public class Protobowl {
 		}
 	}
 
+	/// <summary>
+	/// Checks if connected.
+	/// </summary>
+	/// <returns><c>true</c>, if connected was ised, <c>false</c> otherwise.</returns>
 	public bool isConnected(){
 		return connected;
 	}

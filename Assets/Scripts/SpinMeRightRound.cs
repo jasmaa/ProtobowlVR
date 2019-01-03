@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Spins me right round, baby, right round on axis
+/// </summary>
 public class SpinMeRightRound : MonoBehaviour {
-	/// <summary>
-	/// Spins me right round, baby, right round on axis
-	/// </summary>
 
 	public Vector3 axis;
 

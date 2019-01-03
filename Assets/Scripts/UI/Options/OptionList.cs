@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handles selectable options
+/// </summary>
 public class OptionList : MonoBehaviour {
-	/// <summary>
-	/// Handles selectable options
-	/// </summary>
 
 	private GameObject categoryWheel;
 	private GameObject difficultyWheel;
@@ -26,19 +26,18 @@ public class OptionList : MonoBehaviour {
 		profileOptions = transform.Find ("ProfileOptions").gameObject;
 	}
 
+	/// <summary>
+	/// Reset option menu state
+	/// </summary>
 	public void ResetState(){
-		/// <summary>
-		/// Reset option menu state
-		/// </summary>
-
 		selectedState = SelectedState.NONE;
 	}
 
+	/// <summary>
+	/// Toggle profile option menu
+	/// </summary>
 	public void ChooseProfile(){
-		/// <summary>
-		/// Toggle profile option menu
-		/// </summary>
-
+		
 		if (selectedState == SelectedState.NONE) {
 			profileOptions.SetActive (true);
 			selectedState = SelectedState.PROFILE;
@@ -49,10 +48,10 @@ public class OptionList : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Toggle category options
+	/// </summary>
 	public void ChooseCategory(){
-		/// <summary>
-		/// Toggle category options
-		/// </summary>
 
 		if (selectedState == SelectedState.NONE) {
 			categoryWheel.SetActive (true);
@@ -69,10 +68,10 @@ public class OptionList : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Toggle difficulty options
+	/// </summary>
 	public void ChooseDifficulty(){
-		/// <summary>
-		/// Toggle difficulty options
-		/// </summary>
 
 		if (selectedState == SelectedState.NONE) {
 			difficultyWheel.SetActive (true);
@@ -89,14 +88,12 @@ public class OptionList : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Leave room and send player back to hub
+	/// </summary>
 	public void ChooseLeave(){
-		/// <summary>
-		/// Leave room
-		/// </summary>
 		
 		GameManager.instance.client.pb.Disconnect ();
-
-		// send player back to hub here!!!!!!!!!!!!
 		SceneManager.LoadScene("HubVR");
 	}
 }

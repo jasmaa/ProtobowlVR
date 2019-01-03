@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Displays answer text
+/// <summary>
 public class AnswerText : MonoBehaviour {
-	/// <summary>
-	/// Displays answer text
-	/// <summary>
 	
 	void Update(){
 		if (GameManager.instance.client.pb.state == Protobowl.GameState.IDLE) {

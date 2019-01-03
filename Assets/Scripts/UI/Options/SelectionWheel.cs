@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Selection wheel widget for selecting from a list of options
+/// </summary>
 public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
-	/// <summary>
-	/// Selection wheel widget for selecting from a list of options
-	/// </summary>
 
 	public GameObject selectionTextTemplate;
 	private List<GameObject> selectionTexts;
@@ -20,7 +20,6 @@ public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 	public GameObject selectionArea;
 	private Vector2 oldPos = Vector2.zero;
 
-	// Use this for initialization
 	void Start () {
 
 		selectionTexts = new List<GameObject> ();
@@ -35,18 +34,17 @@ public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 		}
 	}
 
+	/// <summary>
+	/// Get selected string
+	/// </summary>
 	public string GetSelected(){
-		/// <summary>
-		/// Get selected string
-		/// </summary>
-		
 		return selected;
 	}
 
+	/// <summary>
+	/// Set wheel's state based on query
+	/// </summary>
 	public void SetSelected(string query){
-		/// <summary>
-		/// Set wheel's state based on query
-		/// </summary>
 	
 		query = ParseQuery (query);
 
@@ -94,11 +92,11 @@ public class SelectionWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 		// set option
 		selected = ParseQuery(options[(int)(selectionArea.GetComponent<RectTransform>().anchoredPosition.y / separationFactor)]);
 	}
-
+		
+	/// <summary>
+	/// Parse special queries from category and difficulty lists
+	/// </summary>
 	private string ParseQuery(string s){
-		/// <summary>
-		/// Parse special queries from category and difficulty lists
-		/// </summary>
 		
 		if ("Everything".Equals(s) || "Any".Equals(s)) {
 			return "";

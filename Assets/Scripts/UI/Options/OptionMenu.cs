@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls option menu while in a game room
+/// </summary>
 public class OptionMenu : MonoBehaviour {
-	/// <summary>
-	/// Controls option menu while in a game room
-	/// </summary>
 
 	public bool isMenuOpen = false;
 
@@ -34,11 +34,11 @@ public class OptionMenu : MonoBehaviour {
 		transform.position = player.transform.position + offset;
 	}
 
+	/// <summary>
+	/// Open menu
+	/// </summary>
+	/// <param name="hand">Transform to spawn menu</param>
 	public void Open(Transform hand){
-		/// <summary>
-		/// Open menu
-		/// </summary>
-		/// <param name="hand">Transform to spawn menu</param>
 		
 		if (!isMenuOpen) {
 			transform.position = hand.position;
@@ -48,10 +48,11 @@ public class OptionMenu : MonoBehaviour {
 			ani.Play ("OptionMenuOpen");
 		}
 	}
+
+	/// <summary>
+	/// Close menu
+	/// </summary>
 	public void Close(){
-		/// <summary>
-		/// Close menu
-		/// </summary>
 		
 		if(isMenuOpen && Vector3.Dot(-transform.forward, player.transform.forward) > 0.9) {
 			isMenuOpen = false;

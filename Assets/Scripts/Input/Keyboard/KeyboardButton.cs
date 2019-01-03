@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// VR keyboard key
+/// </summary>
 public class KeyboardButton : MonoBehaviour {
-	/// <summary>
-	/// VR keyboard key
-	/// </summary>
 
 	public string mainChar;
 	public string shiftChar;
@@ -22,20 +22,18 @@ public class KeyboardButton : MonoBehaviour {
 		});
 	}
 
+	/// <summary>
+	/// Initialize key
+	/// </summary>
 	public void Init(){
-		/// <summary>
-		/// Initialize key
-		/// </summary>
-		
 		currChar = mainChar;
 		transform.GetChild(0).GetComponent<Text> ().text = currChar;
 	}
 
+	/// <summary>
+	/// Set shift mode
+	/// </summary>
 	public void SetShift(bool shift){
-		/// <summary>
-		/// Set shift mode
-		/// </summary>
-		
 		currChar = shift ? shiftChar : mainChar;
 		transform.GetChild(0).GetComponent<Text> ().text = currChar;
 	}

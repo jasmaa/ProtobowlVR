@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Physics rope with static src and movable target
+/// </summary>
 public class Rope : MonoBehaviour {
-	/// <summary>
-	/// Physics rope with static src and movable target
-	/// </summary>
 
 	public LineRenderer lineRenderer;
 	private List<GameObject> joints;

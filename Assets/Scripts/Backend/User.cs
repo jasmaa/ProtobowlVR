@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Protobowl user object
+/// </summary>
 public class User {
-	/// <summary>
-	/// Protobowl user object
-	/// </summary>
 
 	public string id;
 	public string name;

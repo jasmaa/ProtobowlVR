@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Keeps a list of users and scores in the room
+/// </summary>
 public class UserList : MonoBehaviour {
-	/// <summary>
-	/// Keeps a list of users and scores in the room
-	/// </summary>
 
 	public GameObject userWidgetTemplate;
 
@@ -18,13 +18,14 @@ public class UserList : MonoBehaviour {
 	}
 
 	void Update(){
+		//TODO: only update when new user id added to set
 		UpdateUsers ();
 	}
 
+	/// <summary>
+	/// Rebuild updated user list
+	/// </summary>
 	void UpdateUsers(){
-		/// <summary>
-		/// Rebuild updated user list
-		/// </summary>
 	
 		// empty old
 		foreach (GameObject userWidget in userWidgets) {
