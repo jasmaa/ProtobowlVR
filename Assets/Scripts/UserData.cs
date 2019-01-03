@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Persistent user data
+/// </summary>
 public class UserData : MonoBehaviour {
-
-	/// <summary>
-	/// Persistent user data
-	/// </summary>
 
 	public static UserData instance;
 

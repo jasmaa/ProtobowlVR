@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// VR keyboard for Protobowl input fields
+/// </summary>
 public class Keyboard : MonoBehaviour {
-	/// <summary>
-	/// VR keyboard for Protobowl input fields
-	/// </summary>
 
 	public enum KeyboardType {
 		BUZZ,
@@ -17,7 +17,7 @@ public class Keyboard : MonoBehaviour {
 	}
 	public KeyboardType keyboardType;
 
-	public string text;
+	public string text = "brothers";
 	public GameObject keyboardButtonTemplate;
 	public GameObject spaceButtonTemplate;
 	public GameObject backspaceButtonTemplate;
@@ -30,7 +30,6 @@ public class Keyboard : MonoBehaviour {
 	private bool isShift = false;
 	private int cursorFlick = 0;
 
-	// Use this for initialization
 	void Start () {
 		keyboardButtons = new List<KeyboardButton> ();
 		BuildQWERTY ();
@@ -40,52 +39,50 @@ public class Keyboard : MonoBehaviour {
 
 		keyboardDisplay.text = text;
 
+		// Update flickering cursor
 		if (cursorFlick < 50) {
 			keyboardDisplay.text += "|";
 		}
 		cursorFlick = (cursorFlick + 1) % 100;
 	}
 
+	/// <summary>
+	/// Clears keyboard input text
+	/// </summary>
 	public void ClearText(){
-		/// <summary>
-		/// Clears keyboard input text
-		/// </summary>
-		
 		text = "";
 	}
 
+	/// <summary>
+	/// Toggle shift mode
+	/// </summary>
 	public void ToggleShift(){
-		/// <summary>
-		/// Toggle shift mode
-		/// </summary>
-		
 		isShift = !isShift;
 		SetShift (isShift);
 	}
+
+	/// <summary>
+	/// Set shift mode on or off
+	/// </summary>
 	public void SetShift(bool shift){
-		/// <summary>
-		/// Set shift mode on or off
-		/// </summary>
-		
 		foreach (KeyboardButton keyboardButton in keyboardButtons) {
 			keyboardButton.SetShift (shift);
 		}
 	}
 
+	/// <summary>
+	/// Backspace
+	/// </summary>
 	public void Backspace(){
-		/// <summary>
-		/// Backspace
-		/// </summary>
-		
 		if (text.Length > 0) {
 			text = text.Substring (0, text.Length - 1);
 		}
 	}
 
+	/// <summary>
+	/// Build a bare bones QWERTY keyboard
+	/// </summary>
 	void BuildQWERTY(){
-		/// <summary>
-		/// Build a bare bones QWERTY keyboard
-		/// </summary>
 		
 		// build row 1
 		string[] rowMain1 = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=" };
@@ -153,15 +150,15 @@ public class Keyboard : MonoBehaviour {
 		AddFuncKey(shiftButtonTemplate, new Vector2(15, -135));
 		AddFuncKey(shiftButtonTemplate, new Vector2(550, -135));
 	}
-
+		
+	/// <summary>
+	/// Adds a normal key to keyboard
+	/// </summary>
+	/// <param name="template">Normal key GameObject template</param>
+	/// <param name="pos">Position of the key</param>
+	/// <param name="mainChar">Unshifted character</param>
+	/// <param name="shiftChar">Shifted character</param>
 	void AddKey(GameObject template, Vector2 pos, string mainChar, string shiftChar){
-		/// <summary>
-		/// Adds a normal key to keyboard
-		/// </summary>
-		/// <param name="template">Normal key GameObject template</param>
-		/// <param name="pos">Position of the key</param>
-		/// <param name="mainChar">Unshifted character</param>
-		/// <param name="shiftChar">Shifted character</param>
 		
 		GameObject key = Instantiate (template, transform);
 
@@ -175,35 +172,32 @@ public class Keyboard : MonoBehaviour {
 		keyboardButtons.Add (keyboardButton);
 	}
 
+	/// <summary>
+	/// Adds a function key to keyboard
+	/// </summary>
+	/// <param name="template">Normal key GameObject template</param>
+	/// <param name="pos">Position of the key</param>
 	void AddFuncKey(GameObject template, Vector2 pos){
-		/// <summary>
-		/// Adds a function key to keyboard
-		/// </summary>
-		/// <param name="template">Normal key GameObject template</param>
-		/// <param name="pos">Position of the key</param>
-		
 		GameObject key = Instantiate (template, transform);
 		key.GetComponent<RectTransform> ().anchoredPosition = pos;
 	}
 
+	/// <summary>
+	/// Submit query
+	/// </summary>
 	public void Submit(){
-		switch(keyboardType){
-			case  KeyboardType.BUZZ:
-				GameManager.instance.client.pb.Guess(text, true);
-				break;
-		case  KeyboardType.JOIN_ROOM:
-				UserData.instance.room = text;
-				
-				print (UserData.instance.room);
-
-				SceneManager.LoadScene("GameRoomVR");
-				break;
-			case  KeyboardType.CHANGE_NAME:
-				GameManager.instance.client.pb.SetName(text);
-				break;
-			case  KeyboardType.CHAT:
-				GameManager.instance.client.pb.Chat(text, true);
-				break;
+		if (keyboardType == KeyboardType.BUZZ) {
+			GameManager.instance.client.pb.Guess (text, true);
+		}
+		else if (keyboardType == KeyboardType.JOIN_ROOM) {
+			UserData.instance.room = text;
+			SceneManager.LoadScene("GameRoomVR");
+		}
+		else if (keyboardType == KeyboardType.CHANGE_NAME) {
+			GameManager.instance.client.pb.SetName(text);
+		}
+		else if (keyboardType == KeyboardType.CHAT) {
+			GameManager.instance.client.pb.Chat(text, true);
 		}
 	}
 }

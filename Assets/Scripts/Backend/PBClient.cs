@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Interfaces game and Protobowl
+/// </summary>
 public class PBClient : MonoBehaviour {
-	/// <summary>
-	/// Interfaces game and Protobowl
-	/// </summary>
 	
 	public PBStateTracker tracker;
 	public Protobowl pb;

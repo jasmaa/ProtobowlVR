@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 
+/// <summary>
+/// Speech recognizer for Windows
+/// <summary>
 public class VoiceInput : MonoBehaviour {
-	/// <summary>
-	/// Speech recognizer for Windows
-	/// <summary>
 	
 	DictationRecognizer recognizer;
 
@@ -20,20 +20,19 @@ public class VoiceInput : MonoBehaviour {
 		};
 	}
 
+	/// <summary>
+	/// Open for input
+	/// </summary>
 	public void TurnOn(){
-		/// <summary>
-		/// Open for input
-		/// </summary>
-		
 		if (recognizer.Status == SpeechSystemStatus.Stopped) {
 			recognizer.Start ();
 		}
 	}
+
+	/// <summary>
+	/// Close out any further input
+	/// </summary>
 	public void TurnOff(){
-		/// <summary>
-		/// Close out any further input
-		/// </summary>
-		
 		if (recognizer.Status == SpeechSystemStatus.Running) {
 			recognizer.Stop ();
 		}

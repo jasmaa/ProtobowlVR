@@ -5,13 +5,13 @@ using UnityEngine;
 
 using SimpleJSON;
 
+/// <summary>
+/// Handles question display and game state
+/// </summary>
 public class PBStateTracker : MonoBehaviour {
-	/// <summary>
-	/// Handles question display and game state
-	/// </summary>
 	
 	public Protobowl pb;
-	private float localTime = 0;
+	private long localTime = 0;
 	private int localIndex = 0;
 
 	private string disp = "";
@@ -26,19 +26,33 @@ public class PBStateTracker : MonoBehaviour {
 		Invoke ("PlayQuestion", 0.5f);
 	}
 
+	public float GetTimePassed(){
+		return (localTime - pb.data ["time_offset"].AsLong - pb.data ["begin_time"].AsLong) / 1000f;
+	}
+	public float GetTotalTime(){
+		return (pb.data ["end_time"].AsLong - pb.data ["begin_time"].AsLong) / 1000f;
+	}
+
+	/// <summary>
+	/// Gets the percentage time passed.
+	/// </summary>
+	/// <returns>The percentage time passed.</returns>
+	public float GetPercentageTimePassed(){
+		return (float) GetTimePassed () / GetTotalTime ();
+	}
+
+	/// <summary>
+	/// Sets up tracker
+	/// </summary>
 	void PlayQuestion(){
-		/// <summary>
-		/// Sets up tracker
-		/// </summary>
-		
 		InitDisp ();
 		StartCoroutine (UpdateDisp());
 	}
 
+	/// <summary>
+	/// Set tracker to initial display and state
+	/// </summary>
 	void InitDisp(){
-		/// <summary>
-		/// Set tracker to initial display and state
-		/// </summary>
 		
 		var timePassed = pb.data ["real_time"].AsLong - pb.data ["time_offset"].AsLong - pb.data ["begin_time"].AsLong;
 
@@ -62,10 +76,10 @@ public class PBStateTracker : MonoBehaviour {
 		localTime = pb.data ["real_time"].AsLong;
 	}
 
+	/// <summary>
+	/// Update display and state
+	/// </summary>
 	IEnumerator UpdateDisp(){
-		/// <summary>
-		/// Update display and state
-		/// </summary>
 		
 		while (true) {
 			if (!pb.isConnected ()) {
@@ -91,7 +105,7 @@ public class PBStateTracker : MonoBehaviour {
 
 					var currentInterval = Mathf.Round (timing [localIndex] * pb.data ["rate"]);
 					yield return new WaitForSeconds (currentInterval / 1000);
-					localTime += currentInterval;
+					localTime += (long) currentInterval;
 					localIndex++;
 				}
 				else {

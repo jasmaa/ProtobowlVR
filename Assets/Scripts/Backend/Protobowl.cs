@@ -8,10 +8,10 @@ using UnityEngine.Networking;
 using WebSocketSharp;
 using SimpleJSON;
 
+/// <summary>
+/// Bare bones Protobowl API
+/// </summary>
 public class Protobowl {
-	/// <summary>
-	/// Bare bones Protobowl API
-	/// </summary>
 
 	public enum GameState {
 		RUNNING,
@@ -39,12 +39,12 @@ public class Protobowl {
 	private WebSocket ws;
 	private bool connected = false;
 
+	/// <summary>
+	/// Initialize socket connection
+	/// </summary>
+	/// <param name="roomName">Room name</param>
+	/// <param name="cookie">User cookie</param>
 	public IEnumerator Connect(string roomName, string cookie){
-		/// <summary>
-		/// Initialize socket connection
-		/// </summary>
-		/// <param name="roomName">Room name</param>
-		/// <param name="cookie">User cookie</param>
 		
 		this.cookie = cookie;
 
@@ -80,10 +80,10 @@ public class Protobowl {
 		}
 	}
 
+	/// <summary>
+	/// Disconnect socket
+	/// </summary>
 	public void Disconnect(){
-		/// <summary>
-		/// Disconnect socket
-		/// </summary>
 		
 		if (connected) {
 			connected = false;
@@ -95,11 +95,11 @@ public class Protobowl {
 		return connected;
 	}
 
+	/// <summary>
+	/// Updates data
+	/// <summary>
+	/// <param name="rawData">Raw socket response</param>
 	private void UpdateData(string rawData){
-		/// <summary>
-		/// Updates data
-		/// <summary>
-		/// <param name="rawData">Raw socket response</param>
 		
 		JSONNode parsedData = JSON.Parse (rawData.Substring(4));
 
@@ -108,6 +108,7 @@ public class Protobowl {
 			oldData = data;
 			data = Utils.MergeDict (data, args);
 
+			// Determine if user can claim buzz
 			if (awaitConfirmBuzz) {
 				if (uid.Equals (args ["attempt"] ["user"])) {
 					hasBuzz = true;
@@ -122,10 +123,10 @@ public class Protobowl {
 		}
 	}
 
+	/// <summary>
+	/// Update client state based on socket response
+	/// </summary>
 	private void UpdateState(){
-		/// <summary>
-		/// Update client state based on socket response
-		/// </summary>
 		
 		if (data ["real_time"].AsLong - data ["time_offset"].AsLong - data ["end_time"].AsLong < 0) {
 			state = Protobowl.GameState.RUNNING;
@@ -135,7 +136,15 @@ public class Protobowl {
 
 		// time freeze check
 		if (data ["time_freeze"] != 0) {
-			state = Protobowl.GameState.BUZZED;
+			if (args ["attempt"] == null) {
+				state = Protobowl.GameState.PAUSED;
+			}
+			else if (args ["attempt"] ["prompt"] == true) {
+				state = Protobowl.GameState.PROMPTED;
+			}
+			else {
+				state = Protobowl.GameState.BUZZED;
+			}
 		}
 		else if (Utils.containsKey("question", oldData) &&
 			Utils.containsKey("question", args) &&
@@ -146,10 +155,10 @@ public class Protobowl {
 		}
 	}
 
+	/// <summary>
+	/// Updates user names and scores
+	/// </summary>
 	public void UpdateUsers(){
-		/// <summary>
-		/// Updates user names and scores
-		/// </summary>
 
 		foreach (JSONNode userData in args["users"]){
 
@@ -181,46 +190,49 @@ public class Protobowl {
 
 	// === Receive ===
 
+	/// <summary>
+	/// Get question category
+	/// </summary>
 	public string GetQuestionCategory(){
-		/// <summary>
-		/// Get question category
-		/// </summary>
-		
 		return data ["info"] ["category"];
 	}
 
+	/// <summary>
+	/// Get room category
+	/// </summary>
 	public string GetRoomCategory(){
-		/// <summary>
-		/// Get room category
-		/// </summary>
-		
 		return data ["category"];
 	}
 
+	/// <summary>
+	/// Get room difficulty
+	/// </summary>
 	public string GetDifficulty(){
-		/// <summary>
-		/// Get room difficulty
-		/// </summary>
-		
 		return data ["difficulty"];
 	}
 
+	/// <summary>
+	/// Get question answer
+	/// </summary>
 	public string GetAnswer(){
-		/// <summary>
-		/// Get question answer
-		/// </summary>
-		
 		return data ["answer"];
+	}
+
+	/// <summary>
+	/// Get prompt time in seconds
+	/// </summary>
+	/// <returns>The prompt time.</returns>
+	public float GetPromptTime(){
+		return data ["prompt_duration"] / 1000;
 	}
 
 	// === Send ===
 
+	/// <summary>
+	/// Join room
+	/// </summary>
+	/// <param name="roomName">Room to join</param>
 	public void JoinRoom(string roomName){
-		/// <summary>
-		/// Join room
-		/// </summary>
-		/// <param name="roomName">Room to join</param>
-		
 		ws.Send ("5:::{\"name\":\"join\",\"args\":[{\"cookie\":\"" +
 			cookie +
 			"\",\"auth\":null,\"question_type\":\"qb\",\"room_name\":\"" +
@@ -228,108 +240,95 @@ public class Protobowl {
 			"\",\"muwave\":false,\"agent\":\"M4/Web\",\"agent_version\":\"Sat Sep 02 2017 11:33:43 GMT-0700 (PDT)\",\"version\":8}]}");
 	}
 
+	/// <summary>
+	/// Set player handle
+	/// </summary>
+	/// <param name="name">Handle name</param>
 	public void SetName(string name){
-		/// <summary>
-		/// Set player handle
-		/// </summary>
-		/// <param name="name">Handle name</param>
-		
 		ws.Send ("5:::{\"name\":\"set_name\",\"args\":[\"" + name + "\",null]}");
 	}
-	
+
+	/// <summary>
+	/// Buzz on question
+	/// </summary>
 	public void Buzz(){
-		/// <summary>
-		/// Buzz on question
-		/// </summary>
-		
 		ws.Send ("5:23+::{\"name\":\"buzz\",\"args\":[\"" + data["qid"] + "\"]}");
 		awaitConfirmBuzz = true;
 	}
-	
+
+	/// <summary>
+	/// Guess answer
+	/// </summary>
+	/// <param name="guess">Answer to guess</param>
+	/// <param name="done">Whether guess is done</param>
 	public void Guess(string guess, bool done = false){
-		/// <summary>
-		/// Guess answer
-		/// </summary>
-		/// <param name="guess">Answer to guess</param>
-		/// <param name="done">Whether guess is done</param>
-		
 		ws.Send ("5:::{\"name\":\"guess\",\"args\":[{\"text\":\"" + guess + "\",\"done\":" + done.ToString().ToLower() + "},null]}");
 	}
-	
+
+	/// <summary>
+	/// Go to next question
+	/// </summary>
 	public void Next(){
-		/// <summary>
-		/// Go to next question
-		/// </summary>
-		
 		ws.Send ("5:::{\"name\":\"next\",\"args\":[null,null]}");
 	}
-	
+
+	/// <summary>
+	/// Skip question
+	/// </summary>
 	public void Skip(){
-		/// <summary>
-		/// Skip question
-		/// </summary>
-		
 		ws.Send ("5:::{\"name\":\"skip\",\"args\":[null,null]}");
 	}
-	
+
+	/// <summary>
+	/// Pause question
+	/// </summary>
 	public void Pause(){
-		/// <summary>
-		/// Pause question
-		/// </summary>
-		
 		ws.Send ("5:::{\"name\":\"pause\",\"args\":[null,null]}");
 	}
-	
+
+	/// <summary>
+	/// Unpause question
+	/// </summary>
 	public void Unpause(){
-		/// <summary>
-		/// Unpause question
-		/// </summary>
-		
 		ws.Send ("5:::{\"name\":\"unpause\",\"args\":[null,null]}");
 	}
 
+	/// <summary>
+	/// Reset user score
+	/// </summary>
 	public void ResetScore(){
-		/// <summary>
-		/// Reset user score
-		/// </summary>
-		
 		ws.Send ("5:::{\"name\":\"reset_score\",\"args\":[null,null]}");
 	}
 
-	public void Ping(){
-		/// <summary>
-		/// Ping server to keep connection alive
-		/// </summary>
-		
+	/// <summary>
+	/// Ping server to keep connection alive
+	/// </summary>
+	public void Ping(){		
 		ws.Send ("2::");
 	}
-	
+
+	/// <summary>
+	/// Send message through chat
+	/// </summary>
+	/// <param name="message">Message to send</param>
+	/// <param name="done">Whether message sending is done</param>
 	public void Chat(string message, bool done = false){
-		/// <summary>
-		/// Send message through chat
-		/// </summary>
-		/// <param name="message">Message to send</param>
-		/// <param name="done">Whether message sending is done</param>
-		
 		ws.Send ("5:::{\"name\":\"chat\",\"args\":[{\"text\":\""+ message +"\",\"session\":null,\"first\":false,\"" + done.ToString().ToLower() + "\":false},null]}");
 	}
-	
+
+	/// <summary>
+	/// Set difficulty
+	/// </summary>
+	/// <param name="difficulty">Difficulty string</param>
 	public void SetDifficulty(string difficulty){
-		/// <summary>
-		/// Set difficulty
-		/// </summary>
-		/// <param name="difficulty">Difficulty string</param>
-		
 		ws.Send ("5:::{\"name\":\"set_difficulty\",\"args\":[\""+ difficulty +"\",null]}");
 	}
-	
+
+	/// <summary>
+	/// Set category
+	/// </summary>
+	/// <param name="category">Category string</param>
 	public void SetCategory(string category){
-		/// <summary>
-		/// Set category
-		/// </summary>
-		/// <param name="category">Category string</param>
-		
 		ws.Send ("5:::{\"name\":\"set_category\",\"args\":[\""+ category +"\",null]}");
-		Debug.Log ("5:::{\"name\":\"set_category\",\"args\":[\""+ category +"\",null]}");
 	}
 }

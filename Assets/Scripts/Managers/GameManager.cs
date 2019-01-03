@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages front end game
+/// </summary>
 public class GameManager : MonoBehaviour {
-	/// <summary>
-	/// Manages front end game
-	/// </summary>
 
 	public static GameManager instance;
 	public PBClient client;
@@ -37,10 +37,9 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		//print (client.pb.state);
 
 		// === Update based on state ===
-		if (stateUpdateCooldown == 0 && client.pb.state != Protobowl.GameState.BUZZED) {
+		if (stateUpdateCooldown == 0 && client.pb.state != Protobowl.GameState.BUZZED && client.pb.state != Protobowl.GameState.PROMPTED) {
 			buzzer.GetComponent<Buzzer>().SetLight (false);
 			inputManager.TurnOff ();
 			buzzLockout = false;
@@ -86,11 +85,10 @@ public class GameManager : MonoBehaviour {
 		stateUpdateCooldown = Mathf.Clamp(stateUpdateCooldown - Time.deltaTime, 0, 9999);
 	}
 
+	/// <summary>
+	/// Handle player buzz
+	/// </summary>
 	void PlayerBuzz(){
-		/// <summary>
-		/// Handle player buzz
-		/// </summary>
-		
 		if (buzzLockout) {
 			return;
 		}
@@ -100,11 +98,11 @@ public class GameManager : MonoBehaviour {
 
 		Invoke ("DetectBuzz", 0.1f);
 	}
+
+	/// <summary>
+	/// Detect and update client if player claimed the buzz
+	/// </summary>
 	void DetectBuzz(){
-		/// <summary>
-		/// Detect and update client if player claimed the buzz
-		/// </summary>
-		
 		if (client.pb.hasBuzz) {
 			buzzer.GetComponent<Buzzer>().SetLight (true);
 			inputManager.TurnOn ();

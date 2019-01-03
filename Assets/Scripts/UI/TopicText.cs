@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Updates text with question topic
+/// <summary>
 public class TopicText : MonoBehaviour {
-	/// <summary>
-	/// Updates text with question topic
-	/// <summary>
 
 	private Text topicText;
 

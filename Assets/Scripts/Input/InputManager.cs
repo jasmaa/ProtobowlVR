@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages input method in VR
+/// </summary>
 public class InputManager : MonoBehaviour {
-	/// <summary>
-	/// Manages input method in VR
-	/// </summary>
 		
 	public enum InputMode {
 		KEYBOARD,
@@ -20,26 +20,23 @@ public class InputManager : MonoBehaviour {
 		TurnOff ();
 	}
 
+	/// <summary>
+	/// Open for input
+	/// </summary>
 	public void TurnOn(){
-		/// <summary>
-		/// Open for input
-		/// </summary>
-		
 		if (mode == InputMode.KEYBOARD) {
 			keyboardVR.SetActive (true);
 		}
 		else if (mode == InputMode.SPEECH){
 			voiceInput.TurnOn ();
 		}
-
 	}
 
+	/// <summary>
+	/// Close out any further input
+	/// </summary>
 	public void TurnOff(){
-		/// <summary>
-		/// Close out any further input
-		/// </summary>
-		
-		keyboardVR.GetComponent<Keyboard> ().ClearText (); 
+		keyboardVR.GetComponent<Keyboard> ().ClearText ();
 		keyboardVR.SetActive (false);
 		voiceInput.TurnOff ();
 	}
