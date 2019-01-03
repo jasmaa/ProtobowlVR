@@ -14,6 +14,8 @@ public class PBStateTracker : MonoBehaviour {
 	private long localTime = 0;
 	private int localIndex = 0;
 
+	private Protobowl.GameState oldState;
+
 	private string disp = "";
 	public string Disp
 	{
@@ -26,9 +28,18 @@ public class PBStateTracker : MonoBehaviour {
 		Invoke ("PlayQuestion", 0.5f);
 	}
 
+	/// <summary>
+	/// Gets time passed since question began in seconds
+	/// </summary>
+	/// <returns>The time passed.</returns>
 	public float GetTimePassed(){
 		return (pb.data ["real_time"].AsLong - pb.data ["time_offset"].AsLong - pb.data ["begin_time"].AsLong) / 1000f;
 	}
+
+	/// <summary>
+	/// Gets total question time in seconds
+	/// </summary>
+	/// <returns>The total time.</returns>
 	public float GetTotalTime(){
 		return (pb.data ["end_time"].AsLong - pb.data ["begin_time"].AsLong) / 1000f;
 	}
@@ -86,6 +97,15 @@ public class PBStateTracker : MonoBehaviour {
 				continue;
 			}
 
+			// detect change in state
+			if (oldState != pb.state) {
+				oldState = pb.state;
+
+				if (oldState == Protobowl.GameState.RUNNING) {
+					localTime = pb.data ["real_time"].AsLong;
+				}
+			}
+
 			// detect new question
 			if (pb.state == Protobowl.GameState.NEW_Q) {
 				pb.state = Protobowl.GameState.RUNNING;
@@ -109,8 +129,14 @@ public class PBStateTracker : MonoBehaviour {
 					localIndex++;
 				}
 				else {
-					yield return new WaitForSeconds (pb.data["answer_duration"] / 1000);
-					pb.state = Protobowl.GameState.IDLE;
+					var timePassed = (localTime - pb.data ["time_offset"].AsLong - pb.data ["begin_time"].AsLong) / 1000f;
+					var currentInterval = 100;
+					if (timePassed < GetTotalTime ()) {
+						localTime += currentInterval;
+						yield return new WaitForSeconds (currentInterval / 1000f);
+					} else {
+						pb.state = Protobowl.GameState.IDLE;
+					}
 				}
 			} else {
 				yield return new WaitForSeconds (0.1f);
