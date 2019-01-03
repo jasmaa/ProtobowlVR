@@ -27,7 +27,7 @@ public class PBStateTracker : MonoBehaviour {
 	}
 
 	public float GetTimePassed(){
-		return (localTime - pb.data ["time_offset"].AsLong - pb.data ["begin_time"].AsLong) / 1000f;
+		return (pb.data ["real_time"].AsLong - pb.data ["time_offset"].AsLong - pb.data ["begin_time"].AsLong) / 1000f;
 	}
 	public float GetTotalTime(){
 		return (pb.data ["end_time"].AsLong - pb.data ["begin_time"].AsLong) / 1000f;

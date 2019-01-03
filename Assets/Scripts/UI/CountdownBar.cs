@@ -87,6 +87,8 @@ public class CountdownBar : MonoBehaviour {
 			currTime = GameManager.instance.client.tracker.GetTimePassed ();
 			barImg.color = new Color (51/255f, 122/255f, 183/255f, 200/255f);
 			isMoving = true;
+
+			print (currTime);
 		}
 		else if(mode == Mode.BUZZED){
 			targetTime = ATTEMPT_TIME;
