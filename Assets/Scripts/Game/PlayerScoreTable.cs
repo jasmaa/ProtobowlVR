@@ -8,8 +8,14 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerScoreTable : MonoBehaviour {
 
+	private Animator ani;
 	private GameObject player;
 	private string uid;
+	private bool hasBuzz;
+
+	void Start(){
+		ani = GetComponent<Animator> ();
+	}
 
 	void Update(){
 
@@ -24,7 +30,16 @@ public class PlayerScoreTable : MonoBehaviour {
 
 		// Check if buzzed
 		if(GameManager.instance.client.pb.state == Protobowl.GameState.BUZZED && uid.Equals(GameManager.instance.client.pb.buzzUid)){
-			print (GameManager.instance.client.pb.users [uid].name + " is buzzing");
+			hasBuzz = true;
+			ani.Play ("PlayerScoreTable_Buzz");
+		}
+		else if((GameManager.instance.client.pb.state == Protobowl.GameState.RUNNING || GameManager.instance.client.pb.state == Protobowl.GameState.IDLE) && hasBuzz){
+			if (GameManager.instance.client.pb.correct) {
+				ani.Play ("PlayerScoreTable_Taunt");
+			} else {
+				ani.Play ("PlayerScoreTable_Shock");
+			}
+			hasBuzz = false;
 		}
 	}
 

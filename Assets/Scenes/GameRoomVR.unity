@@ -3470,7 +3470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1683567271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4800,7 +4800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1564303767}
-  scoreTableTemplate: {fileID: 1598608930292638, guid: e195321ede57fbf44aab78cf7d002379,
+  scoreTableTemplate: {fileID: 1557022428350836, guid: e195321ede57fbf44aab78cf7d002379,
     type: 2}
   center: {fileID: 926555852}
   radius: 5

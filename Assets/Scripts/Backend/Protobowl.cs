@@ -32,10 +32,11 @@ public class Protobowl {
 	public bool hasBuzz = false;
 	private bool awaitConfirmBuzz = false;
 	public string buzzUid;
+	public bool correct;
+
 	public Stack<JSONNode> logStack = new Stack<JSONNode>();
 
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
-
 	private string socketString;
 	private string cookie;
 	private WebSocket ws;
@@ -114,7 +115,11 @@ public class Protobowl {
 			oldData = data;
 			data = Utils.MergeDict (data, args);
 
-			buzzUid = args ["attempt"] ["user"];
+			// update on attempt
+			if (args ["attempt"] != null) {
+				buzzUid = args ["attempt"] ["user"];
+				correct = args ["attempt"] ["correct"];
+			}
 
 			// Determine if user can claim buzz
 			if (awaitConfirmBuzz) {
