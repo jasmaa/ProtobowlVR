@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// Manages game arena
@@ -42,13 +43,13 @@ public class ArenaManager : MonoBehaviour {
 		}
 		scoreTables.Clear ();
 
-		int total = GameManager.instance.client.pb.users.Values.Count;
+		int total = GameManager.instance.client.pb.users.Values.Where(user => !GameManager.instance.client.pb.uid.Equals(user.id) && user.isActive).Count() + 1;
 		int count = 1;
 		foreach (User user in GameManager.instance.client.pb.users.Values) {
 
 			idSet.Add (user.id);
 
-			if (GameManager.instance.client.pb.uid.Equals (user.id)) {
+			if (!user.isActive || GameManager.instance.client.pb.uid.Equals(user.id) || GameManager.instance.client.pb.uid.Equals (user.id)) {
 				continue;
 			}
 

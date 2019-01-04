@@ -36,6 +36,7 @@ public class UserList : MonoBehaviour {
 		int count = 0;
 		List<User> sortedUsers = GameManager.instance.client.pb.users.Values.ToList();
 		sortedUsers.Sort ((User a, User b) => b.score - a.score);
+		sortedUsers = sortedUsers.Take (3).ToList();
 		foreach(User user in sortedUsers){
 			GameObject userWidget = Instantiate(userWidgetTemplate, transform);
 			userWidget.transform.Find ("UserName").GetComponent<Text>().text = user.name;

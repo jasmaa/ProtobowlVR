@@ -176,7 +176,8 @@ public class Protobowl {
 
 			User user;
 			if (!users.ContainsKey (userData ["id"])) {
-				user = new User (userData ["id"], userData ["name"], 0);
+				var isActive = args ["real_time"].AsLong - userData ["last_action"].AsLong < 120000;
+				user = new User (userData ["id"], userData ["name"], 0, isActive);
 				users.Add (userData ["id"], user);
 			} else {
 				user = users [userData ["id"]];
