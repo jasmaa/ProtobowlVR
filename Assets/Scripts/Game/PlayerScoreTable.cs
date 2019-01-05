@@ -23,9 +23,10 @@ public class PlayerScoreTable : MonoBehaviour {
 			return;
 		}
 
-		// Update name board
+		// Update name board and score
 		if (GameManager.instance.client.pb.users.ContainsKey(uid)) {
 			transform.Find("NameBoard").GetChild(0).GetChild(0).GetComponent<Text>().text = GameManager.instance.client.pb.users [uid].name;
+			transform.Find("ScoreBoard").GetChild(0).GetComponent<Text>().text = GameManager.instance.client.pb.users [uid].score + "";
 		}
 
 		// Check if buzzed
