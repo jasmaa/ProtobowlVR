@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class PlayerScoreTable : MonoBehaviour {
 
 	private Animator ani;
+	private AudioSource audioSrc;
 	private GameObject player;
 	private string uid;
 	private bool hasBuzz;
@@ -21,6 +22,7 @@ public class PlayerScoreTable : MonoBehaviour {
 
 	void Start(){
 		ani = GetComponent<Animator> ();
+		audioSrc = GetComponent<AudioSource> ();
 	}
 
 	void Update(){
@@ -36,9 +38,10 @@ public class PlayerScoreTable : MonoBehaviour {
 		}
 
 		// Check if buzzed
-		if(GameManager.instance.client.pb.state == Protobowl.GameState.BUZZED && uid.Equals(GameManager.instance.client.pb.buzzUid)){
+		if(!hasBuzz && GameManager.instance.client.pb.state == Protobowl.GameState.BUZZED && uid.Equals(GameManager.instance.client.pb.buzzUid)){
 			hasBuzz = true;
 			ani.Play ("PlayerScoreTable_Buzz");
+			audioSrc.Play ();
 		}
 		else if((GameManager.instance.client.pb.state == Protobowl.GameState.RUNNING || GameManager.instance.client.pb.state == Protobowl.GameState.IDLE) && hasBuzz){
 			if (GameManager.instance.client.pb.correct) {

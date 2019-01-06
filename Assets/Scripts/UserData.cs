@@ -20,6 +20,7 @@ public class UserData : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 
-		//TODO: retrieve cookie here
+		cookie = PlayerPrefs.HasKey ("cookie") ? PlayerPrefs.GetString ("cookie") : Utils.GenerateCookie ();
+		PlayerPrefs.SetString ("cookie", cookie);
 	}
 }

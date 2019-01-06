@@ -73,7 +73,7 @@ public class PBStateTracker : MonoBehaviour {
 
 		var accum = 0;
 		var qList = pb.data ["question"].ToString ().Split (' ');
-		List<int> timing = Utils.convertJSONToList (pb.data ["timing"].AsArray);
+		List<int> timing = Utils.ConvertJSONToList (pb.data ["timing"].AsArray);
 		for (int i = 0; i < timing.Count; i++) {
 			localIndex = i;
 			accum += (int)Mathf.Round (timing [i] * pb.data ["rate"]);
@@ -117,7 +117,7 @@ public class PBStateTracker : MonoBehaviour {
 
 				pb.hasBuzz = false;
 
-				List<int> timing = Utils.convertJSONToList (pb.data ["timing"].AsArray);
+				List<int> timing = Utils.ConvertJSONToList (pb.data ["timing"].AsArray);
 
 				if (localIndex < timing.Count) {
 					var qList = pb.data ["question"].ToString ().Split (' ');

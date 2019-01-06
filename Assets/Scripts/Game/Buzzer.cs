@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Controls buzzer GameObject
+/// Controls player buzzer
 /// </summary>
 public class Buzzer : MonoBehaviour {
 
 	public Material onMat;
 	public Material offMat;
 
+	private AudioSource audioSrc;
+
 	// Use this for initialization
 	void Start () {
+		audioSrc = GetComponent<AudioSource> ();
 		SetLight (false);
 	}
 
@@ -22,6 +25,7 @@ public class Buzzer : MonoBehaviour {
 		
 		if (value) {
 			transform.Find("Light").transform.GetComponent<Renderer>().material = onMat;
+			audioSrc.Play ();
 		} else {
 			transform.Find("Light").transform.GetComponent<Renderer>().material = offMat;
 		}

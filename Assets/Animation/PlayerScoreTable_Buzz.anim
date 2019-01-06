@@ -92,6 +92,15 @@ AnimationClip:
     path: avatar_02/Head/Face
     classID: 23
     script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: 0f5a608779883724b996db4e9cb3df7d, type: 2}
+    - time: 0.16666667
+      value: {fileID: 2100000, guid: 2381db32537a94c47be75bdef49e5bba, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: avatar_02/RHand/Buzzer/Light
+    classID: 23
+    script: {fileID: 0}
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -120,8 +129,17 @@ AnimationClip:
       typeID: 23
       customType: 21
       isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 459195156
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
     pptrCurveMapping:
     - {fileID: 2100000, guid: 205263ada4feb074aa8df35f53814cc3, type: 2}
+    - {fileID: 2100000, guid: 0f5a608779883724b996db4e9cb3df7d, type: 2}
+    - {fileID: 2100000, guid: 2381db32537a94c47be75bdef49e5bba, type: 2}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

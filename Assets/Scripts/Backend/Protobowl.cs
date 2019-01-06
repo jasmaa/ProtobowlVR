@@ -42,6 +42,9 @@ public class Protobowl {
 	private WebSocket ws;
 	private bool connected = false;
 
+	private bool hasName = PlayerPrefs.HasKey("name");
+	private string name = PlayerPrefs.GetString("name");
+
 	/// <summary>
 	/// Initialize socket connection
 	/// </summary>
@@ -67,8 +70,12 @@ public class Protobowl {
 				ws.OnOpen += (sender, e) => {
 					connected = true;
 
-					// join room
+					// join room and set name
 					JoinRoom (roomName);
+
+					if(hasName){
+						SetName(name);
+					}
 				};
 
 				ws.OnMessage += (sender, e) => {
@@ -178,8 +185,8 @@ public class Protobowl {
 				state = Protobowl.GameState.BUZZED;
 			}
 		}
-		else if (Utils.containsKey("question", oldData) &&
-			Utils.containsKey("question", args) &&
+		else if (Utils.ContainsKey("question", oldData) &&
+			Utils.ContainsKey("question", args) &&
 			!oldData ["question"].Equals(args ["question"])) {
 
 			state = Protobowl.GameState.NEW_Q;

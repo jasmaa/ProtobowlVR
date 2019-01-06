@@ -33,6 +33,7 @@ public class Keyboard : MonoBehaviour {
 	void Start () {
 		keyboardButtons = new List<KeyboardButton> ();
 		BuildQWERTY ();
+		InitText ();
 	}
 
 	void Update(){
@@ -191,13 +192,23 @@ public class Keyboard : MonoBehaviour {
 		}
 		else if (keyboardType == KeyboardType.JOIN_ROOM) {
 			UserData.instance.room = text;
-			SceneManager.LoadScene("GameRoomVR");
+			SceneManager.LoadScene ("GameRoomVR");
 		}
 		else if (keyboardType == KeyboardType.CHANGE_NAME) {
-			GameManager.instance.client.pb.SetName(text);
+			PlayerPrefs.SetString ("name", text);
+			print (PlayerPrefs.GetString("name"));
 		}
 		else if (keyboardType == KeyboardType.CHAT) {
-			GameManager.instance.client.pb.Chat(text, true);
+			GameManager.instance.client.pb.Chat (text, true);
+		}
+	}
+
+	/// <summary>
+	/// Inits the text.
+	/// </summary>
+	public void InitText(){
+		if (keyboardType == KeyboardType.CHANGE_NAME) {
+			text = PlayerPrefs.GetString("name");
 		}
 	}
 }

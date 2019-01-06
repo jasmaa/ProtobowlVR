@@ -13,7 +13,7 @@ public static class Utils {
 	/// Convert JSONArray to int List
 	/// </summary>
 	/// <param name="arr">JSONArray to convert</param>
-	public static List<int> convertJSONToList(JSONArray arr){
+	public static List<int> ConvertJSONToList(JSONArray arr){
 
 		List<int> retList = new List<int> ();
 		foreach (JSONNode element in arr) {
@@ -27,7 +27,7 @@ public static class Utils {
 	/// </summary>
 	/// <param name="target">Target key to look for</param>
 	/// <param name="dict">JSONNode to search through</param>
-	public static bool containsKey(string target, JSONNode dict){
+	public static bool ContainsKey(string target, JSONNode dict){
 
 		foreach (var key in dict.Keys) {
 			if(target.Equals(key)){
@@ -52,5 +52,19 @@ public static class Utils {
 			ret.Add (key, addition[key]);
 		}
 		return ret;
+	}
+
+	/// <summary>
+	/// Generates the cookie.
+	/// </summary>
+	/// <returns>The cookie.</returns>
+	public static string GenerateCookie(){
+		string id = "";
+		string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		for (int i = 0; i < 20; i++) {
+			id += alphabet.Substring(Random.Range(0, alphabet.Length-1), 1);
+		}
+
+		return id;
 	}
 }
