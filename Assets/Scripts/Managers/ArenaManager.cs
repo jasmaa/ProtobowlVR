@@ -11,9 +11,9 @@ public class ArenaManager : MonoBehaviour {
 	public GameObject player;
 
 	public GameObject scoreTableTemplate;
-	List<GameObject> scoreTables;
+	private List<GameObject> scoreTables;
 
-	HashSet<string> idSet;
+	private HashSet<string> idSet;
 
 	public GameObject center;
 	public float radius;
@@ -25,8 +25,9 @@ public class ArenaManager : MonoBehaviour {
 	}
 
 	void Update(){
-		foreach (string id in GameManager.instance.client.pb.users.Keys) {
-			if (!idSet.Contains (id)) {
+
+		foreach (User user in GameManager.instance.client.pb.users.Values) {
+			if (user.isActive && !idSet.Contains (user.id)) {
 				UpdateArena ();
 				return;
 			}
@@ -37,22 +38,24 @@ public class ArenaManager : MonoBehaviour {
 	/// Updates arena.
 	/// </summary>
 	void UpdateArena(){
-		
+
+		// Destroy old
 		foreach (GameObject scoreTable in scoreTables) {
 			Destroy (scoreTable);
 		}
 		scoreTables.Clear ();
 
-		int total = GameManager.instance.client.pb.users.Values.Where(user => !GameManager.instance.client.pb.uid.Equals(user.id) && user.isActive).Count() + 1;
+		int total = GameManager.instance.client.pb.users.Values.Where (user => user.isActive && !GameManager.instance.client.pb.uid.Equals (user.id)).Count() + 1;
 		int count = 1;
-		foreach (User user in GameManager.instance.client.pb.users.Values) {
+		foreach (User user in GameManager.instance.client.pb.users.Values.Where (user => user.isActive)) {
 
 			idSet.Add (user.id);
 
-			if (!user.isActive || GameManager.instance.client.pb.uid.Equals(user.id) || GameManager.instance.client.pb.uid.Equals (user.id)) {
+			if (!user.isActive || GameManager.instance.client.pb.uid.Equals (user.id)) {
 				continue;
 			}
 
+			// Place players in a circle
 			GameObject playerScoreTable = Instantiate (scoreTableTemplate, transform);
 			playerScoreTable.transform.position = new Vector3 (
 				radius * Mathf.Sin (2 * Mathf.PI * ((float)count / total)),
@@ -64,7 +67,8 @@ public class ArenaManager : MonoBehaviour {
 				0,
 				center.transform.position.z
 			);
-				
+
+			// Initiate opponent params
 			playerScoreTable.GetComponent<PlayerScoreTable> ().SetUID (user.id);
 			playerScoreTable.GetComponent<PlayerScoreTable> ().SetPlayer (player);
 			playerScoreTable.GetComponent<PlayerScoreTable> ().SetTarget(center);

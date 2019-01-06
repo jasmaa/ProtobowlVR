@@ -63,7 +63,9 @@ public class CountdownBar : MonoBehaviour {
 			currTime = Mathf.Clamp(currTime + Time.deltaTime, 0, targetTime);
 		}
 
-		movingBar.transform.GetComponent<RectTransform> ().localScale = new Vector3 (initScale * currTime / targetTime, initScale, initScale);
+		if (targetTime != 0) {
+			movingBar.transform.GetComponent<RectTransform> ().localScale = new Vector3 (initScale * currTime / targetTime, initScale, initScale);
+		}
 	}
 
 	/// <summary>

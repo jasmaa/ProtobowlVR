@@ -13,6 +13,12 @@ public class PlayerScoreTable : MonoBehaviour {
 	private string uid;
 	private bool hasBuzz;
 
+	private string[] clipNames = {
+		"PlayerScoreTable_Embarrassed",
+		"PlayerScoreTable_Thinking",
+		"PlayerScoreTable_Taunt"
+	};
+
 	void Start(){
 		ani = GetComponent<Animator> ();
 	}
@@ -36,11 +42,16 @@ public class PlayerScoreTable : MonoBehaviour {
 		}
 		else if((GameManager.instance.client.pb.state == Protobowl.GameState.RUNNING || GameManager.instance.client.pb.state == Protobowl.GameState.IDLE) && hasBuzz){
 			if (GameManager.instance.client.pb.correct) {
-				ani.Play ("PlayerScoreTable_Taunt");
+				ani.Play ("PlayerScoreTable_Victory");
 			} else {
 				ani.Play ("PlayerScoreTable_Shock");
 			}
 			hasBuzz = false;
+		}
+
+		// Play random animation
+		if (ani.GetCurrentAnimatorStateInfo (0).IsName ("PlayerScoreTable_Idle") && Random.Range(0, 1000) >= 999) {
+			ani.Play (clipNames[Random.Range(0, clipNames.Length)]);
 		}
 	}
 

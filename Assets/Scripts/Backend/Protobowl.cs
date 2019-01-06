@@ -131,7 +131,8 @@ public class Protobowl {
 			uid = parsedData ["args"] [0] ["id"];
 		}
 		else if ("log".Equals (parsedData ["name"])) {
-			logStack.Push (parsedData ["args"] [0]);
+			JSONNode logData = parsedData ["args"] [0];
+			logStack.Push (logData);
 		}
 	}
 
@@ -174,9 +175,10 @@ public class Protobowl {
 
 		foreach (JSONNode userData in args["users"]){
 
+			var isActive = args ["real_time"].AsLong - userData ["last_action"].AsLong < 120000;
+
 			User user;
 			if (!users.ContainsKey (userData ["id"])) {
-				var isActive = args ["real_time"].AsLong - userData ["last_action"].AsLong < 120000;
 				user = new User (userData ["id"], userData ["name"], 0, isActive);
 				users.Add (userData ["id"], user);
 			} else {
@@ -198,7 +200,10 @@ public class Protobowl {
 
 			user.score = score;
 
+			// update active
+			user.isActive = isActive;
 		}
+			
 	}
 
 	// === Receive ===

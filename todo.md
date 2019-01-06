@@ -9,7 +9,7 @@
 	  - ~~Display question~~
 	  - ~~Allow for buzzing~~
 	  - ~~Allow for answering~~
-	  - Show other user buzzes
+	  - ~~Show other user buzzes~~
 	  - Show log
 	  - ~~Allow for setting changes and score view~~
 	
@@ -21,14 +21,16 @@
 
   - Make art
     - ~~model~~ and animate buzzer
-    - model environment
+    - ~~model environment~~
 	- make fancy UI
 	- sounds
-	- Animated dummies representing opponents
+	- ~~Animated dummies representing opponents~~
+	  - More varied animations?
 	
   - Answering system
     - Two handed typing
     - ~~Typing or speech recognition?~~
+	  - Fix bugs with voice recognition failing
 	- text-to-speech reading??
   
   - Integrate Oculus
