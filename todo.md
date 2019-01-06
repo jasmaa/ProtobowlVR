@@ -10,7 +10,7 @@
 	  - ~~Allow for buzzing~~
 	  - ~~Allow for answering~~
 	  - ~~Show other user buzzes~~
-	  - Show log
+	  - ~~Show log~~
 	  - ~~Allow for setting changes and score view~~
 	
 	- ~~Make a main hub~~

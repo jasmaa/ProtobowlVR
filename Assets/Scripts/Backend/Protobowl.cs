@@ -119,6 +119,14 @@ public class Protobowl {
 			if (args ["attempt"] != null) {
 				buzzUid = args ["attempt"] ["user"];
 				correct = args ["attempt"] ["correct"];
+
+				// log on done
+				if (args ["attempt"] ["done"]) {
+					JSONNode entry = new JSONObject ();
+					entry.Add ("user", args ["attempt"] ["user"]);
+					entry.Add ("verb", "guessed " + args ["attempt"] ["text"]  + " (" + (args["attempt"]["correct"] ? "CORRECT" : "WRONG") + ")");
+					logStack.Push (entry);
+				}
 			}
 
 			// Determine if user can claim buzz
@@ -133,6 +141,17 @@ public class Protobowl {
 		else if ("log".Equals (parsedData ["name"])) {
 			JSONNode logData = parsedData ["args"] [0];
 			logStack.Push (logData);
+		}
+		else if ("chat".Equals (parsedData ["name"])) {
+			args = parsedData ["args"] [0];
+
+			// log on done
+			if (args ["done"]) {
+				JSONNode entry = new JSONObject ();
+				entry.Add ("user", args ["user"]);
+				entry.Add ("verb", ": " + args ["text"]);
+				logStack.Push (entry);
+			}
 		}
 	}
 
