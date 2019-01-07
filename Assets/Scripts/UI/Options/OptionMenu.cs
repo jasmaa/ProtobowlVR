@@ -53,8 +53,11 @@ public class OptionMenu : MonoBehaviour {
 	/// Close menu
 	/// </summary>
 	public void Close(){
-		
-		if(isMenuOpen && Vector3.Dot(-transform.forward, player.transform.forward) > 0.9) {
+
+		Vector3 projForward = new Vector3 (player.transform.forward.x, 0, player.transform.forward.z);
+		projForward.Normalize ();
+
+		if(isMenuOpen && Vector3.Dot(-transform.forward, projForward) > 0.9) {
 			isMenuOpen = false;
 			optionList.GetComponent<OptionList> ().ResetState ();
 			categoryWheel.SetActive(false);

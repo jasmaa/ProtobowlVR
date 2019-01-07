@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000016, guid: a1330107961454e48ba98742b814919f,
+  m_LightingDataAsset: {fileID: 112000014, guid: a1330107961454e48ba98742b814919f,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05eea774aa873ae4fb75cac980d96001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: {x: 0, y: 0, z: 1}
+  axis: {x: 0, y: 0, z: 0.3}
 --- !u!1 &193773744 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: eafba464b866c234693f2e9f29a908de,
@@ -856,7 +856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05eea774aa873ae4fb75cac980d96001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: {x: 0, y: 0, z: 1}
+  axis: {x: 0, y: 0, z: 0.3}
 --- !u!4 &602331136 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4968530344861600, guid: ab2fc4dedf3825143bb1b615e93d46ba,
@@ -2469,7 +2469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05eea774aa873ae4fb75cac980d96001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: {x: 0, y: 0, z: 1}
+  axis: {x: 0, y: 0, z: 0.3}
 --- !u!1001 &1929206437
 Prefab:
   m_ObjectHideFlags: 0
