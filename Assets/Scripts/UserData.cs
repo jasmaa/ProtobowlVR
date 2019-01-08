@@ -12,7 +12,6 @@ public class UserData : MonoBehaviour {
 	public string room = "bot-testing-vr";
 	public string cookie = "derp";
 
-	// Use this for initialization
 	void Awake () {
 		if (instance == null) {
 			instance = this;

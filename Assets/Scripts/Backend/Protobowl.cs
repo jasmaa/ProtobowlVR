@@ -46,8 +46,6 @@ public class Protobowl {
 	private bool hasName = PlayerPrefs.HasKey("name");
 	private string name = PlayerPrefs.GetString("name");
 
-	int counter;
-
 	/// <summary>
 	/// Initialize socket connection
 	/// </summary>
@@ -84,14 +82,9 @@ public class Protobowl {
 
 				ws.OnMessage += (sender, e) => {
 					// Update data on websocket sync
-
-					counter++;
-					Debug.Log("start " + counter);
 					lock (responseQueue) {
 						responseQueue.Enqueue(e.Data);
 					}
-					Debug.Log("end " + counter);
-
 				};
 
 				ws.ConnectAsync ();
