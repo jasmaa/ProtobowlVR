@@ -15,8 +15,8 @@ public class VoiceInput : MonoBehaviour {
 		recognizer.DictationResult += (text, confidence) => {
 			if(!"".Equals(text)){
 				GameManager.instance.client.pb.Guess(text, true);
-				TurnOff();
 			}
+			TurnOff();
 		};
 	}
 

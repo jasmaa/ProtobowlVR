@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Linq;
 
 using WebSocketSharp;
 using SimpleJSON;
@@ -34,7 +34,8 @@ public class Protobowl {
 	public string buzzUid;
 	public bool correct;
 
-	public Stack<JSONNode> logStack = new Stack<JSONNode>();
+	private Stack<JSONNode> logStack = new Stack<JSONNode>();
+	private List<string> logList = new List<string> ();
 
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
 	private string socketString;
@@ -128,11 +129,13 @@ public class Protobowl {
 				correct = args ["attempt"] ["correct"];
 
 				// log on done
-				if (args ["attempt"] ["done"]) {
+				if (args ["attempt"] ["done"] && !args["attempt"]["prompt"]) {
 					JSONNode entry = new JSONObject ();
 					entry.Add ("user", args ["attempt"] ["user"]);
 					entry.Add ("verb", "guessed " + args ["attempt"] ["text"]  + " (" + (args["attempt"]["correct"] ? "CORRECT" : "WRONG") + ")");
-					logStack.Push (entry);
+					lock (logStack) {
+						logStack.Push (entry);
+					}
 				}
 			}
 
@@ -147,7 +150,9 @@ public class Protobowl {
 		}
 		else if ("log".Equals (parsedData ["name"])) {
 			JSONNode logData = parsedData ["args"] [0];
-			logStack.Push (logData);
+			lock (logStack) {
+				logStack.Push (logData);
+			}
 		}
 		else if ("chat".Equals (parsedData ["name"])) {
 			args = parsedData ["args"] [0];
@@ -157,7 +162,9 @@ public class Protobowl {
 				JSONNode entry = new JSONObject ();
 				entry.Add ("user", args ["user"]);
 				entry.Add ("verb", ": " + args ["text"]);
-				logStack.Push (entry);
+				lock (logStack) {
+					logStack.Push (entry);
+				}
 			}
 		}
 	}
@@ -174,7 +181,7 @@ public class Protobowl {
 		}
 
 		// time freeze check
-		if (data ["time_freeze"] != 0) {
+		if (args ["time_freeze"] != 0) {
 			if (args ["attempt"] == null) {
 				state = Protobowl.GameState.PAUSED;
 			}
@@ -230,6 +237,26 @@ public class Protobowl {
 			user.isActive = isActive;
 		}
 			
+	}
+
+	/// <summary>
+	/// Thread-safe log text retrieval
+	/// </summary>
+	/// <returns>The log string.</returns>
+	/// <param name="n">Last n entries in log</param></param>
+	public string GetLogStr(int n){
+		lock (logStack) {
+
+			// reconstruct log text
+			logList.Clear();
+			foreach (JSONNode entry in logStack) {
+				if (users.Keys.Contains (entry ["user"])) {
+					logList.Add (users [entry ["user"]].name + " " + entry ["verb"]);
+				}
+			}
+
+			return System.String.Join ("\n", logList.Take(n).ToArray());
+		}
 	}
 
 	// === Receive ===

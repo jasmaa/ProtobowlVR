@@ -40,12 +40,7 @@ public class GameText : MonoBehaviour {
 		} else if (textType == TextType.TOPIC) {
 			gameText.text = GameManager.instance.client.pb.GetQuestionCategory ();
 		} else if (textType == TextType.LOG) {
-			// construct log text
-			List<string> logList = new List<string>();
-			foreach (JSONNode entry in GameManager.instance.client.pb.logStack) {
-				logList.Add (GameManager.instance.client.pb.users [entry ["user"]].name + " " + entry ["verb"]);
-			}
-			gameText.text = System.String.Join ("\n", logList.Take(20).ToArray());
+			gameText.text = GameManager.instance.client.pb.GetLogStr (20);
 		}
 	}
 }
