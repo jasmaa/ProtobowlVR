@@ -90,7 +90,7 @@ public class PBStateTracker : MonoBehaviour {
 	/// <summary>
 	/// Update display and state
 	/// </summary>
-	IEnumerator UpdateDisp(){
+	public IEnumerator UpdateDisp(){
 		
 		while (true) {
 			if (!pb.isConnected ()) {

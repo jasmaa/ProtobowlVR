@@ -13,7 +13,8 @@ public class PBClient : MonoBehaviour {
 	void Start () {
 
 		pb = new Protobowl ();
-		StartCoroutine(pb.Connect (UserData.instance.room, UserData.instance.cookie));
+		StartCoroutine (pb.Connect (UserData.instance.room, UserData.instance.cookie));
+		StartCoroutine (pb.ProcessData());
 
 		tracker.pb = pb;
 	}

@@ -35,7 +35,7 @@ public class Protobowl {
 	public bool correct;
 
 	private Stack<JSONNode> logStack = new Stack<JSONNode>();
-	private List<string> logList = new List<string> ();
+	private Queue<string> responseQueue = new Queue<string> ();
 
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
 	private string socketString;
@@ -45,6 +45,8 @@ public class Protobowl {
 
 	private bool hasName = PlayerPrefs.HasKey("name");
 	private string name = PlayerPrefs.GetString("name");
+
+	int counter;
 
 	/// <summary>
 	/// Initialize socket connection
@@ -77,17 +79,49 @@ public class Protobowl {
 					if(hasName){
 						SetName(name);
 					}
+
 				};
 
 				ws.OnMessage += (sender, e) => {
 					// Update data on websocket sync
-					UpdateData(e.Data);
-					UpdateState();
-					UpdateUsers();
+
+					counter++;
+					Debug.Log("start " + counter);
+					lock (responseQueue) {
+						responseQueue.Enqueue(e.Data);
+					}
+					Debug.Log("end " + counter);
+
 				};
 
 				ws.ConnectAsync ();
 			}
+		}
+	}
+		
+	/// <summary>
+	/// Processes the data on queue
+	/// </summary>
+	public IEnumerator ProcessData(){
+		while (true) {
+			if (isConnected () && responseQueue.Count > 0) {
+
+				string data;
+				lock (responseQueue) {
+					data = responseQueue.Dequeue ();
+				}
+
+				try{
+					UpdateData(data);
+					UpdateState();
+					UpdateUsers();
+				}
+				catch(Exception e){
+					// ignore response
+				}
+			}
+
+			yield return new WaitForSeconds (0.001f);
 		}
 	}
 
@@ -182,7 +216,7 @@ public class Protobowl {
 
 		// time freeze check
 		if (args ["time_freeze"] != 0) {
-			if (args ["attempt"] == null) {
+			if (args ["attempt"] == null && !data["no_pause"]) {
 				state = Protobowl.GameState.PAUSED;
 			}
 			else if (args ["attempt"] ["prompt"] == true) {
@@ -248,7 +282,7 @@ public class Protobowl {
 		lock (logStack) {
 
 			// reconstruct log text
-			logList.Clear();
+			List<string> logList = new List<string>();
 			foreach (JSONNode entry in logStack) {
 				if (users.Keys.Contains (entry ["user"])) {
 					logList.Add (users [entry ["user"]].name + " " + entry ["verb"]);

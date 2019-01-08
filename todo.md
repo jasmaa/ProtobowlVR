@@ -23,14 +23,14 @@
     - ~~model~~ and animate buzzer
     - ~~model environment~~
 	- make fancy UI
-	- sounds
+	- ~~sounds~~
 	- ~~Animated dummies representing opponents~~
 	  - More varied animations?
 	
   - Answering system
     - Two handed typing
     - ~~Typing or speech recognition?~~
-	  - Fix bugs with voice recognition failing
+	  - ~~Fix bugs with voice recognition failing~~
 	- text-to-speech reading??
   
   - Integrate Oculus
