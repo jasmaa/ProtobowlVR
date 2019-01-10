@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Non-opponent robo-avatar
+/// Static non-opponent robo-avatar
 /// </summary>
 public class StaticNPC : MonoBehaviour {
 

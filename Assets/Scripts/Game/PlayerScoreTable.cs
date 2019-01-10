@@ -17,7 +17,9 @@ public class PlayerScoreTable : MonoBehaviour {
 	private string[] clipNames = {
 		"PlayerScoreTable_Embarrassed",
 		"PlayerScoreTable_Thinking",
-		"PlayerScoreTable_Taunt"
+		"PlayerScoreTable_Taunt",
+		"PlayerScoreTable_Shock2",
+		"PlayerScoreTable_Thinking2"
 	};
 
 	void Start(){

@@ -12,6 +12,8 @@ public class OptionList : MonoBehaviour {
 	private GameObject difficultyWheel;
 	private GameObject profileOptions;
 
+	private AudioSource audioSrc;
+
 	private enum SelectedState {
 		PROFILE,
 		CATEGORY,
@@ -24,6 +26,8 @@ public class OptionList : MonoBehaviour {
 		categoryWheel = transform.Find ("CategoryWheel").gameObject;
 		difficultyWheel = transform.Find ("DifficultyWheel").gameObject;
 		profileOptions = transform.Find ("ProfileOptions").gameObject;
+
+		audioSrc = GetComponent<AudioSource> ();
 	}
 
 	/// <summary>
@@ -37,7 +41,9 @@ public class OptionList : MonoBehaviour {
 	/// Toggle profile option menu
 	/// </summary>
 	public void ChooseProfile(){
-		
+
+		audioSrc.Play ();
+
 		if (selectedState == SelectedState.NONE) {
 			profileOptions.SetActive (true);
 			selectedState = SelectedState.PROFILE;
@@ -52,6 +58,8 @@ public class OptionList : MonoBehaviour {
 	/// Toggle category options
 	/// </summary>
 	public void ChooseCategory(){
+
+		audioSrc.Play ();
 
 		if (selectedState == SelectedState.NONE) {
 			categoryWheel.SetActive (true);
@@ -73,6 +81,8 @@ public class OptionList : MonoBehaviour {
 	/// </summary>
 	public void ChooseDifficulty(){
 
+		audioSrc.Play ();
+
 		if (selectedState == SelectedState.NONE) {
 			difficultyWheel.SetActive (true);
 			difficultyWheel.GetComponent<SelectionWheel> ().SetSelected (GameManager.instance.client.pb.GetDifficulty());
@@ -92,7 +102,9 @@ public class OptionList : MonoBehaviour {
 	/// Leave room and send player back to hub
 	/// </summary>
 	public void ChooseLeave(){
-		
+
+		audioSrc.Play ();
+
 		GameManager.instance.client.pb.Disconnect ();
 		SceneManager.LoadScene("HubVR");
 	}

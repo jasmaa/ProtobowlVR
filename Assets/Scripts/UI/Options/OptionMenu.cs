@@ -16,12 +16,17 @@ public class OptionMenu : MonoBehaviour {
 
 	private GameObject player;
 	private Animator ani;
+	private AudioSource audioSrc;
+
+	public AudioClip menuOpen;
+	public AudioClip menuClose;
 
 	private Vector3 offset;
 
 	// Use this for initialization
 	void Start () {
 		ani = GetComponent<Animator> ();
+		audioSrc = GetComponent<AudioSource> ();
 		player = GameObject.Find ("CenterEyeAnchor");
 	}
 	
@@ -39,13 +44,16 @@ public class OptionMenu : MonoBehaviour {
 	/// </summary>
 	/// <param name="hand">Transform to spawn menu</param>
 	public void Open(Transform hand){
-		
+
 		if (!isMenuOpen) {
 			transform.position = hand.position;
 			offset = transform.position - player.transform.position;
 
 			isMenuOpen = true;
 			ani.Play ("OptionMenuOpen");
+
+			audioSrc.clip = menuOpen;
+			audioSrc.Play ();
 		}
 	}
 
@@ -65,6 +73,9 @@ public class OptionMenu : MonoBehaviour {
 			profileOptions.SetActive (false);
 
 			ani.Play ("OptionMenuClose");
+
+			audioSrc.clip = menuClose;
+			audioSrc.Play ();
 		}
 	}
 }

@@ -10,10 +10,14 @@ public class ShiftButton : MonoBehaviour {
 	
 	public Keyboard keyboard;
 
+	private AudioSource audioSrc;
+
 	void Start () {
 		keyboard = transform.parent.GetComponent<Keyboard> ();
+		audioSrc = GetComponent<AudioSource> ();
 
 		GetComponent<Button> ().onClick.AddListener(() => {
+			audioSrc.Play();
 			keyboard.ToggleShift();
 		});
 	}

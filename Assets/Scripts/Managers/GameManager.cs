@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour {
 		client.pb.Buzz ();
 		buzzLockout = true;
 
+		// TODO: FIX BUZZ DETECTION IN HSQUIZBOWL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		Invoke ("DetectBuzz", 0.05f);
 	}
 

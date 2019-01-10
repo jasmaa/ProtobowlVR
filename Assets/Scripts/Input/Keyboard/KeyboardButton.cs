@@ -13,12 +13,17 @@ public class KeyboardButton : MonoBehaviour {
 	public string currChar;
 	public Keyboard keyboard;
 
+	private AudioSource audioSrc;
+
 	void Start(){
 		keyboard = transform.parent.GetComponent<Keyboard> ();
+		audioSrc = GetComponent<AudioSource> ();
 
 		GetComponent<Button> ().onClick.AddListener(() => {
 			keyboard.text += currChar;
 			keyboard.SetShift(false);
+
+			audioSrc.Play();
 		});
 	}
 
