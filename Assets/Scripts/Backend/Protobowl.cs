@@ -30,6 +30,7 @@ public class Protobowl {
 	private JSONNode oldData;
 
 	public bool hasBuzz = false;
+	public bool hasRecvBuzzer = false;
 	private bool awaitConfirmBuzz = false;
 	public string buzzUid;
 	public bool correct;
@@ -168,6 +169,7 @@ public class Protobowl {
 
 			// Determine if user can claim buzz
 			if (awaitConfirmBuzz) {
+				hasRecvBuzzer = true;
 				hasBuzz = uid.Equals (buzzUid);
 				awaitConfirmBuzz = false;
 			}

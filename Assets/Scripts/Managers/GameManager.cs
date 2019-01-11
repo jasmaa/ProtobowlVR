@@ -30,6 +30,11 @@ public class GameManager : MonoBehaviour {
 
 		//print (client.pb.state);
 
+		if (GameManager.instance.client.pb.hasRecvBuzzer) {
+			DetectBuzz ();
+			GameManager.instance.client.pb.hasRecvBuzzer = false;
+		}
+
 		// === Update based on state ===
 		if (stateUpdateCooldown == 0 && client.pb.state != Protobowl.GameState.BUZZED && client.pb.state != Protobowl.GameState.PROMPTED) {
 			
@@ -52,9 +57,6 @@ public class GameManager : MonoBehaviour {
 
 		client.pb.Buzz ();
 		buzzLockout = true;
-
-		// TODO: FIX BUZZ DETECTION IN HSQUIZBOWL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		Invoke ("DetectBuzz", 0.1f);
 	}
 
 	/// <summary>
