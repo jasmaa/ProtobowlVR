@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyboardType: 1
-  text: hsquizbowl
+  text: bot-testing-vr
   keyboardButtonTemplate: {fileID: 1263480807992720, guid: 298b0c5f703af524aa408372edb67fe4,
     type: 2}
   spaceButtonTemplate: {fileID: 1182393048256428, guid: d6e2c75037fe10542a50ede5264d53c3,

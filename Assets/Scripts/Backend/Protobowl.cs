@@ -36,6 +36,7 @@ public class Protobowl {
 	public bool correct;
 
 	private Stack<JSONNode> logStack = new Stack<JSONNode>();
+	public Stack<string> answerStack = new Stack<string>();
 	private Queue<string> responseQueue = new Queue<string> ();
 
 	private const string server = "ocean.protobowl.com:443/socket.io/1/websocket/";
@@ -286,6 +287,15 @@ public class Protobowl {
 
 			return System.String.Join ("\n", logList.Take(n).ToArray());
 		}
+	}
+
+	/// <summary>
+	/// Gets the answer log string.
+	/// </summary>
+	/// <returns>The answer log string.</returns>
+	/// <param name="n">number of entries in log</param>
+	public string GetAnswerLogStr(int n){
+		return System.String.Join ("\n", answerStack.Take(n).ToArray());
 	}
 
 	// === Receive ===

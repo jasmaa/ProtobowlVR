@@ -15,6 +15,7 @@ public class PBStateTracker : MonoBehaviour {
 	private int localIndex = 0;
 
 	private Protobowl.GameState oldState;
+	private bool hasAddAnswer = false;
 
 	private string disp = "";
 	public string Disp
@@ -108,6 +109,7 @@ public class PBStateTracker : MonoBehaviour {
 
 			// detect new question
 			if (pb.state == Protobowl.GameState.NEW_Q) {
+				hasAddAnswer = false;
 				pb.state = Protobowl.GameState.RUNNING;
 				InitDisp ();
 			}
@@ -145,6 +147,12 @@ public class PBStateTracker : MonoBehaviour {
 			// auto-fill when question ends
 			if (pb.state == Protobowl.GameState.IDLE) {
 				disp = pb.data ["question"];
+
+				// add answer to log
+				if (!hasAddAnswer) {
+					pb.answerStack.Push (pb.GetAnswer());
+					hasAddAnswer = true;
+				}
 			}
 
 			// ping server

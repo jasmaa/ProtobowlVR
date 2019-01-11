@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Commands for profile option
@@ -26,6 +27,6 @@ public class ProfileOptions : MonoBehaviour {
 	/// </summary>
 	public void ResetRoom(){
 		audioSrc.Play ();
-		//TODO: Reset room layout here
+		SceneManager.LoadScene ("GameRoomVR");
 	}
 }

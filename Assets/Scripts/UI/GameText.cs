@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +17,9 @@ public class GameText : MonoBehaviour {
 		LOG,
 		QUESTION,
 		TIME,
-		TOPIC
+		TOPIC,
+		ANSWER_LOG,
+		SCORE
 	}
 	public TextType textType;
 
@@ -41,6 +44,14 @@ public class GameText : MonoBehaviour {
 			gameText.text = GameManager.instance.client.pb.GetQuestionCategory ();
 		} else if (textType == TextType.LOG) {
 			gameText.text = GameManager.instance.client.pb.GetLogStr (20);
+		} else if (textType == TextType.ANSWER_LOG) {
+			gameText.text = GameManager.instance.client.pb.GetAnswerLogStr (20);
+		} else if (textType == TextType.SCORE) {
+			if (GameManager.instance.client.pb.uid != null) {
+				if (GameManager.instance.client.pb.users.ContainsKey (GameManager.instance.client.pb.uid)) {
+					gameText.text = GameManager.instance.client.pb.users [GameManager.instance.client.pb.uid].score + "";
+				}
+			}
 		}
 	}
 }
