@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour {
 	
 	void Update () {
 
+		//print (client.pb.state);
+
 		// === Update based on state ===
 		if (stateUpdateCooldown == 0 && client.pb.state != Protobowl.GameState.BUZZED && client.pb.state != Protobowl.GameState.PROMPTED) {
 			
@@ -52,7 +54,7 @@ public class GameManager : MonoBehaviour {
 		buzzLockout = true;
 
 		// TODO: FIX BUZZ DETECTION IN HSQUIZBOWL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		Invoke ("DetectBuzz", 0.05f);
+		Invoke ("DetectBuzz", 0.1f);
 	}
 
 	/// <summary>

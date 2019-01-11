@@ -208,14 +208,14 @@ public class Protobowl {
 		}
 
 		// time freeze check
-		if (args ["time_freeze"] != 0) {
-			if (args ["attempt"] == null && !data["no_pause"]) {
+		if (data ["time_freeze"] != 0) {
+			if (data ["attempt"] == null && !data["no_pause"]) {
 				state = Protobowl.GameState.PAUSED;
 			}
-			else if (args ["attempt"] ["prompt"] == true) {
+			else if (data ["attempt"] ["prompt"]) {
 				state = Protobowl.GameState.PROMPTED;
 			}
-			else {
+			else if (data ["attempt"] ["text"] != null) {
 				state = Protobowl.GameState.BUZZED;
 			}
 		}
