@@ -23,3 +23,4 @@ Currently only suppported on Windows
   - [Unity Oculus Integration](https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022)
   - [WebSocketSharp](https://github.com/sta/websocket-sharp)
   - [SimpleJSON](https://github.com/Bunny83/SimpleJSON)
+  - Various audio and graphical assets
