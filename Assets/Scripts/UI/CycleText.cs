@@ -12,11 +12,14 @@ public class CycleText : MonoBehaviour {
 		"Welcome to Protobowl VR!",
 		"Enter a name and room and play quizbowl in VR",
 		"=== CREDITS ===",
+		"Created by Jason Maa",
 		"CODE\n\nOculus Unity Integration\nWebSocketSharp\nSimpleJSON",
 		"SOUND\n\nTim Mortimer Sci-Fi UI\nIOS Keyboard Sounds\nNenadSimic Menu Click",
 		"GRAPHICAL\n\nFantasy Skybox\nStylized Vegetation Pack\nVarious textures...",
 		"FONT\n\nDSEG Font\nFontAwesome",
-		"Thank You!\nHave a nice day!"
+		"SPECIAL THANKS\n\nProtobowl for existing\nVarious testers",
+		"Have a Nice Day!",
+		"▓▓▓▓▓▓▓\n▓░▓▓▓░▓\n▓▓▓▓▓▓▓\n▓░▓▓▓░▓\n▓░░░░░▓\n▓▓▓▓▓▓▓"
 	};
 
 	private Text cycleText;
